@@ -419,6 +419,24 @@
   });
 
   /* ------------------------------------------------------------------------
+     Кнопки «Скопировать номер»
+     ------------------------------------------------------------------------ */
+  document.querySelectorAll('[data-copy]').forEach((button) => {
+    const label = button.textContent;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.getAttribute('data-copy'));
+        button.textContent = 'Номер скопирован';
+      } catch (e) {
+        button.textContent = button.getAttribute('data-copy');
+      }
+      setTimeout(() => {
+        button.textContent = label;
+      }, 2500);
+    });
+  });
+
+  /* ------------------------------------------------------------------------
      Текущий год в подвале
      ------------------------------------------------------------------------ */
   document.querySelectorAll('[data-year]').forEach((el) => {
