@@ -364,9 +364,14 @@
     });
   }
 
+  function showBanner(show) {
+    banner.hidden = !show;
+    root.classList.toggle('cookie-open', show);
+  }
+
   function renderConsent() {
     const consent = readConsent();
-    if (banner) banner.hidden = Boolean(consent);
+    if (banner) showBanner(!consent);
     settingsWraps.forEach((wrap) => {
       wrap.hidden = !consent;
     });
@@ -399,7 +404,7 @@
         clearMetrikaCookies();
         location.reload();
       } else if (banner) {
-        banner.hidden = false;
+        showBanner(true);
         banner.querySelector('[data-cookie-accept]').focus();
       }
     });
