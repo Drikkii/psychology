@@ -1227,34 +1227,26 @@ p {
   place-items: center;
   width: 52px;
   height: 52px;
+  border: 1px solid var(--border);
   border-radius: 50%;
-  color: #ffffff;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: var(--accent);
+  box-shadow: var(--shadow);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .fab__btn:hover {
-  color: #ffffff;
-  transform: scale(1.08);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+  transform: scale(1.06);
 }
 
 .fab__btn svg {
-  width: 24px;
-  height: 24px;
-  stroke-width: 2;
-}
-
-.fab__btn--telegram {
-  background: #229ed9;
-}
-
-.fab__btn--whatsapp {
-  background: #25d366;
-}
-
-.fab__btn--instagram {
-  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+  width: 22px;
+  height: 22px;
 }
 
 @media (max-width: 600px) {
