@@ -92,17 +92,20 @@
     </section>
 
     <section class="section section--soft" aria-labelledby="certs-title">
-      <div class="container carousel" data-carousel>
-        <div class="section__head">
-          <h2 id="certs-title">Образование и квалификация</h2>
-          <p>Дипломы и сертификаты о профессиональной подготовке.</p>
+      <div class="container carousel carousel--certs" data-carousel>
+        <div class="carousel__head">
+          <div class="section__head">
+            <h2 id="certs-title">Образование и квалификация</h2>
+            <p>Дипломы и сертификаты о профессиональной подготовке.</p>
+          </div>
+          <div class="carousel__controls">
+            <button class="slider__arrow" type="button" data-carousel-prev aria-label="Предыдущие документы"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <button class="slider__arrow" type="button" data-carousel-next aria-label="Следующие документы"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 18l6-6-6-6"/></svg></button>
+          </div>
         </div>
-        <div class="carousel__controls">
-          <button class="slider__arrow" type="button" data-carousel-prev aria-label="Предыдущие документы"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 18l-6-6 6-6"/></svg></button>
-          <button class="slider__arrow" type="button" data-carousel-next aria-label="Следующие документы"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 18l6-6-6-6"/></svg></button>
-        </div>
-        <ul class="carousel__track" aria-label="Дипломы и сертификаты" tabindex="0">
-          <li class="carousel__item">
+        <div class="carousel__viewport">
+          <ul class="carousel__track" aria-label="Дипломы и сертификаты">
+            <li class="carousel__item">
             <figure class="cert">
               <div class="cert__image">
                 <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg><span>Скан документа<br>(заглушка)</span></div>
@@ -110,7 +113,7 @@
               <figcaption>Диплом о высшем образовании <span class="todo">[название, год]</span></figcaption>
             </figure>
           </li>
-          <li class="carousel__item">
+            <li class="carousel__item">
             <figure class="cert">
               <div class="cert__image">
                 <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg><span>Скан документа<br>(заглушка)</span></div>
@@ -118,7 +121,7 @@
               <figcaption>Диплом о профессиональной переподготовке <span class="todo">[название, год]</span></figcaption>
             </figure>
           </li>
-          <li class="carousel__item">
+            <li class="carousel__item">
             <figure class="cert">
               <div class="cert__image">
                 <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg><span>Скан документа<br>(заглушка)</span></div>
@@ -126,7 +129,7 @@
               <figcaption>Сертификат <span class="todo">[название, год]</span></figcaption>
             </figure>
           </li>
-          <li class="carousel__item">
+            <li class="carousel__item">
             <figure class="cert">
               <div class="cert__image">
                 <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg><span>Скан документа<br>(заглушка)</span></div>
@@ -134,7 +137,7 @@
               <figcaption>Сертификат <span class="todo">[название, год]</span></figcaption>
             </figure>
           </li>
-          <li class="carousel__item">
+            <li class="carousel__item">
             <figure class="cert">
               <div class="cert__image">
                 <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg><span>Скан документа<br>(заглушка)</span></div>
@@ -142,7 +145,7 @@
               <figcaption>Сертификат <span class="todo">[название, год]</span></figcaption>
             </figure>
           </li>
-          <li class="carousel__item">
+            <li class="carousel__item">
             <figure class="cert">
               <div class="cert__image">
                 <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg><span>Скан документа<br>(заглушка)</span></div>
@@ -150,7 +153,8 @@
               <figcaption>Сертификат <span class="todo">[название, год]</span></figcaption>
             </figure>
           </li>
-        </ul>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -204,18 +208,14 @@
       </div>
     </div>
     <div class="container footer__legal">
-      <p>Психологическое консультирование не является медицинской услугой и не заменяет помощь врача. Если вам или вашим близким угрожает опасность, звоните по номеру экстренных служб 112.</p>
       <p>* Instagram принадлежит компании Meta Platforms Inc., деятельность которой признана экстремистской и запрещена на территории Российской Федерации.</p>
-      <p>© <span data-year>2026</span> Юлия Шевченко · <a href="privacy.html">Политика конфиденциальности</a> · <button type="button" class="link-button" data-cookie-settings>Настройки cookie</button></p>
+      <p>© <span data-year>2026</span> Юлия Шевченко · <a href="privacy.html">Политика конфиденциальности</a> <span data-cookie-settings-wrap hidden>· <button type="button" class="link-button" data-cookie-settings>Отключить аналитические cookie</button></span></p>
     </div>
   </footer>
 
   <div class="cookie-banner" role="region" aria-label="Уведомление о cookie" data-cookie-banner hidden>
-    <p>Сайт использует необходимые cookie и локальное хранилище браузера, чтобы работать и запоминать выбранную тему. С вашего согласия мы также подключим Яндекс Метрику, чтобы понимать, какие разделы полезны посетителям. Подробнее — в <a href="privacy.html">Политике конфиденциальности</a>.</p>
-    <div class="cookie-banner__actions">
-      <button class="btn btn--outline btn--sm" type="button" data-cookie-decline>Только необходимые</button>
-      <button class="btn btn--outline btn--sm" type="button" data-cookie-accept>Принять все</button>
-    </div>
+    <p>Мы используем cookie, чтобы сайт работал удобнее, и Яндекс Метрику для статистики посещений. Нажимая «Принять», вы соглашаетесь с <a href="privacy.html">Политикой конфиденциальности</a>.</p>
+    <button class="btn btn--primary btn--sm" type="button" data-cookie-accept>Принять</button>
   </div>
 </body>
 </html>

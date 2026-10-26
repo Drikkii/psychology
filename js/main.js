@@ -108,17 +108,118 @@
   }
 
   /* ------------------------------------------------------------------------
+     Бесконечная лента: по краям добавляются копии карточек, и после перехода
+     на копию лента незаметно перескакивает на оригинал. Поэтому после
+     последнего слайда сразу идёт первый, без прокрутки назад через все.
+     ------------------------------------------------------------------------ */
+  function createLoop(viewport, track, onChange) {
+    const originals = Array.from(track.children);
+    const count = originals.length;
+
+    function makeClones() {
+      return originals.map((el) => {
+        const clone = el.cloneNode(true);
+        clone.classList.add('is-clone');
+        clone.setAttribute('aria-hidden', 'true');
+        clone.setAttribute('inert', '');
+        clone.querySelectorAll('[id]').forEach((node) => node.removeAttribute('id'));
+        return clone;
+      });
+    }
+
+    track.prepend(...makeClones());
+    track.append(...makeClones());
+
+    const all = Array.from(track.children);
+    let pos = count;
+    let busy = false;
+    let fallback = null;
+
+    function current() {
+      return (((pos - count) % count) + count) % count;
+    }
+
+    function render(animate) {
+      if (!animate) track.style.transition = 'none';
+      track.style.transform = `translateX(${-all[pos].offsetLeft}px)`;
+      if (!animate) {
+        void track.offsetWidth; // применить позицию без анимации
+        track.style.transition = '';
+      }
+    }
+
+    function settle() {
+      clearTimeout(fallback);
+      busy = false;
+      if (pos >= count * 2) {
+        pos -= count;
+        render(false);
+      } else if (pos < count) {
+        pos += count;
+        render(false);
+      }
+    }
+
+    function move(delta) {
+      if (busy || !delta) return;
+      busy = true;
+      pos += delta;
+      render(true);
+      onChange(current());
+      // страховка, если transitionend не придёт (вкладка в фоне и т. п.)
+      fallback = setTimeout(settle, 1000);
+    }
+
+    track.addEventListener('transitionend', (event) => {
+      if (event.target === track && event.propertyName === 'transform') settle();
+    });
+
+    window.addEventListener('resize', () => render(false));
+
+    // Свайп пальцем / мышью
+    let startX = null;
+    let startY = null;
+
+    viewport.addEventListener('pointerdown', (event) => {
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      startX = event.clientX;
+      startY = event.clientY;
+    });
+
+    viewport.addEventListener('pointerup', (event) => {
+      if (startX === null) return;
+      const dx = event.clientX - startX;
+      const dy = event.clientY - startY;
+      startX = null;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) move(dx < 0 ? 1 : -1);
+    });
+
+    viewport.addEventListener('pointercancel', () => {
+      startX = null;
+    });
+
+    render(false);
+    onChange(current());
+
+    return {
+      move,
+      current,
+      goTo: (index) => move(index - current()),
+      onSwipe: (handler) => viewport.addEventListener('pointerup', handler)
+    };
+  }
+
+  /* ------------------------------------------------------------------------
      Слайдер на главной: стрелки, точки, свайп, клавиатура, автопрокрутка
      (пауза при наведении/фокусе, отключена при «уменьшить движение»).
      ------------------------------------------------------------------------ */
   document.querySelectorAll('[data-slider]').forEach((slider) => {
     const track = slider.querySelector('.slider__track');
-    const slides = Array.from(slider.querySelectorAll('.slide'));
+    const slides = Array.from(track.children);
     const prev = slider.querySelector('.slider__arrow--prev');
     const next = slider.querySelector('.slider__arrow--next');
     const dotsBox = slider.querySelector('.slider__dots');
     const interval = Number(slider.getAttribute('data-autoplay')) || 0;
-    let index = 0;
     let timer = null;
     let paused = false;
 
@@ -127,17 +228,11 @@
       dot.type = 'button';
       dot.className = 'slider__dot';
       dot.setAttribute('aria-label', `Слайд ${i + 1} из ${slides.length}`);
-      dot.addEventListener('click', () => {
-        goTo(i);
-        restart();
-      });
       dotsBox.appendChild(dot);
       return dot;
     });
 
-    function goTo(i) {
-      index = (i + slides.length) % slides.length;
-      track.style.transform = `translateX(${-index * 100}%)`;
+    function markActive(index) {
       slides.forEach((slide, n) => {
         const active = n === index;
         slide.toggleAttribute('inert', !active);
@@ -146,36 +241,31 @@
       dots.forEach((dot, n) => dot.setAttribute('aria-current', String(n === index)));
     }
 
-    function stop() {
-      clearInterval(timer);
-      timer = null;
-    }
+    const loop = createLoop(slider, track, markActive);
 
     function restart() {
-      stop();
+      clearInterval(timer);
+      timer = null;
       if (interval && !paused && !reducedMotion.matches && !document.hidden) {
-        timer = setInterval(() => goTo(index + 1), interval);
+        timer = setInterval(() => loop.move(1), interval);
       }
     }
 
-    prev.addEventListener('click', () => {
-      goTo(index - 1);
+    function step(delta) {
+      loop.move(delta);
       restart();
-    });
+    }
 
-    next.addEventListener('click', () => {
-      goTo(index + 1);
+    prev.addEventListener('click', () => step(-1));
+    next.addEventListener('click', () => step(1));
+    dots.forEach((dot, i) => dot.addEventListener('click', () => {
+      loop.goTo(i);
       restart();
-    });
+    }));
 
     slider.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowLeft') {
-        goTo(index - 1);
-        restart();
-      } else if (event.key === 'ArrowRight') {
-        goTo(index + 1);
-        restart();
-      }
+      if (event.key === 'ArrowLeft') step(-1);
+      else if (event.key === 'ArrowRight') step(1);
     });
 
     function pause(state) {
@@ -190,71 +280,34 @@
       if (!slider.contains(event.relatedTarget)) pause(false);
     });
     document.addEventListener('visibilitychange', restart);
+    loop.onSwipe(restart);
 
-    // Свайп пальцем / мышью
-    let startX = null;
-    let startY = null;
-
-    slider.addEventListener('pointerdown', (event) => {
-      if (event.pointerType === 'mouse' && event.button !== 0) return;
-      startX = event.clientX;
-      startY = event.clientY;
-    });
-
-    slider.addEventListener('pointerup', (event) => {
-      if (startX === null) return;
-      const dx = event.clientX - startX;
-      const dy = event.clientY - startY;
-      startX = null;
-      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-        goTo(dx < 0 ? index + 1 : index - 1);
-        restart();
-      }
-    });
-
-    slider.addEventListener('pointercancel', () => {
-      startX = null;
-    });
-
-    goTo(0);
     restart();
   });
 
   /* ------------------------------------------------------------------------
-     Карусель сертификатов (горизонтальная прокрутка со стрелками)
+     Карусели отзывов и сертификатов — та же бесконечная лента, по одной
+     карточке за клик.
      ------------------------------------------------------------------------ */
   document.querySelectorAll('[data-carousel]').forEach((carousel) => {
+    const viewport = carousel.querySelector('.carousel__viewport');
     const track = carousel.querySelector('.carousel__track');
-    const prev = carousel.querySelector('[data-carousel-prev]');
-    const next = carousel.querySelector('[data-carousel-next]');
+    const loop = createLoop(viewport, track, () => {});
 
-    function update() {
-      const max = track.scrollWidth - track.clientWidth - 2;
-      prev.disabled = track.scrollLeft <= 2;
-      next.disabled = track.scrollLeft >= max;
-    }
-
-    function scrollByPage(direction) {
-      track.scrollBy({
-        left: direction * track.clientWidth * 0.8,
-        behavior: reducedMotion.matches ? 'auto' : 'smooth'
-      });
-    }
-
-    prev.addEventListener('click', () => scrollByPage(-1));
-    next.addEventListener('click', () => scrollByPage(1));
-    track.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    update();
+    carousel.querySelector('[data-carousel-prev]').addEventListener('click', () => loop.move(-1));
+    carousel.querySelector('[data-carousel-next]').addEventListener('click', () => loop.move(1));
   });
 
   /* ------------------------------------------------------------------------
      Согласие на cookie и Яндекс Метрика.
-     Метрика загружается ТОЛЬКО после нажатия «Принять».
+     На плашке одна кнопка «Принять»; Метрика загружается только после неё.
+     Отозвать согласие можно ссылкой в подвале.
      ------------------------------------------------------------------------ */
   const CONSENT_KEY = 'cookie-consent';
   const CONSENT_VERSION = 1;
   const banner = document.querySelector('[data-cookie-banner]');
+  const settingsWraps = document.querySelectorAll('[data-cookie-settings-wrap]');
+  const settingsButtons = document.querySelectorAll('[data-cookie-settings]');
   let metrikaLoaded = false;
 
   function readConsent() {
@@ -311,39 +364,45 @@
     });
   }
 
-  function showBanner(show) {
-    if (banner) banner.hidden = !show;
+  function renderConsent() {
+    const consent = readConsent();
+    if (banner) banner.hidden = Boolean(consent);
+    settingsWraps.forEach((wrap) => {
+      wrap.hidden = !consent;
+    });
+    settingsButtons.forEach((button) => {
+      button.textContent = consent && consent.analytics
+        ? 'Отключить аналитические cookie'
+        : 'Включить аналитические cookie';
+    });
   }
 
   if (banner) {
     banner.querySelector('[data-cookie-accept]').addEventListener('click', () => {
       saveConsent(true);
-      showBanner(false);
+      renderConsent();
       loadMetrika();
     });
+  }
 
-    banner.querySelector('[data-cookie-decline]').addEventListener('click', () => {
-      const previous = readConsent();
-      saveConsent(false);
-      showBanner(false);
-      if (previous && previous.analytics) {
-        // Скрипт уже работает на странице — удаляем его cookie и перезагружаем без него
+  settingsButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const consent = readConsent();
+      if (consent && consent.analytics) {
+        // Отзыв согласия: удаляем cookie Метрики и перезагружаем страницу без неё
+        saveConsent(false);
         clearMetrikaCookies();
         location.reload();
+      } else if (banner) {
+        banner.hidden = false;
+        banner.querySelector('[data-cookie-accept]').focus();
       }
     });
-  }
-
-  document.querySelectorAll('[data-cookie-settings]').forEach((button) => {
-    button.addEventListener('click', () => showBanner(true));
   });
 
+  renderConsent();
   const consent = readConsent();
-  if (!consent) {
-    showBanner(true);
-  } else if (consent.analytics) {
-    loadMetrika();
-  }
+  if (consent && consent.analytics) loadMetrika();
 
   // Цели Метрики: клики по кнопкам связи (data-goal="telegram" и т. п.)
   document.addEventListener('click', (event) => {
