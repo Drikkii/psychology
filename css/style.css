@@ -795,10 +795,66 @@ p {
   font-size: 0.95rem;
 }
 
-.service__price {
+/* Длительность и цена прижаты к низу — во всех карточках на одном уровне */
+.service__meta {
   margin-top: auto;
+}
+
+.service__price {
+  margin-bottom: 0;
   font-family: var(--font-serif);
   font-size: 1.5rem;
+}
+
+.service__usd {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+/* Пакеты консультаций */
+.package {
+  display: flex;
+  flex-direction: column;
+}
+
+.package__name {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.package__price {
+  margin: 4px 0 8px;
+  font-family: var(--font-serif);
+  font-size: 2.75rem;
+  line-height: 1.1;
+}
+
+.package__per {
+  color: var(--muted);
+}
+
+.package__per s {
+  opacity: 0.8;
+}
+
+.package__save {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.package--deal {
+  border-color: var(--accent);
 }
 
 .steps {
