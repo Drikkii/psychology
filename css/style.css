@@ -34,45 +34,45 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #151715;
-    --bg-soft: #1b1e1c;
-    --surface: #202421;
-    --text: #ece8e1;
-    --muted: #a7a297;
-    --border: #2f3430;
-    --accent: #8fb3a3;
-    --accent-hover: #a5c4b6;
-    --accent-text: #10140f;
-    --accent-soft: #263129;
-    --switch-off: #3a3f3b;
-    --switch-on: #8fb3a3;
+    --bg: #0e1525;
+    --bg-soft: #121b2e;
+    --surface: #17213a;
+    --text: #e6ebf4;
+    --muted: #9ba7be;
+    --border: #26324d;
+    --accent: #8fb4dc;
+    --accent-hover: #aac8e8;
+    --accent-text: #0b1220;
+    --accent-soft: #1c2a47;
+    --switch-off: #2d3953;
+    --switch-on: #8fb4dc;
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-    --slide-1: radial-gradient(120% 140% at 85% 20%, #2a3a33 0%, #222621 55%, #1b1d1b 100%);
-    --slide-2: radial-gradient(120% 140% at 15% 80%, #3a3128 0%, #24231f 60%, #1b1c1a 100%);
-    --slide-3: radial-gradient(120% 140% at 80% 80%, #312d3d 0%, #232224 60%, #1b1b1c 100%);
-    --slide-4: radial-gradient(120% 140% at 20% 20%, #263838 0%, #212523 60%, #1a1c1b 100%);
+    --slide-1: radial-gradient(120% 140% at 85% 20%, #1d3157 0%, #16213a 55%, #0f1729 100%);
+    --slide-2: radial-gradient(120% 140% at 15% 80%, #2a2d55 0%, #18203a 60%, #0f1628 100%);
+    --slide-3: radial-gradient(120% 140% at 80% 80%, #2b2550 0%, #191f38 60%, #0f1527 100%);
+    --slide-4: radial-gradient(120% 140% at 20% 20%, #173a4f 0%, #152238 60%, #0e1626 100%);
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #151715;
-  --bg-soft: #1b1e1c;
-  --surface: #202421;
-  --text: #ece8e1;
-  --muted: #a7a297;
-  --border: #2f3430;
-  --accent: #8fb3a3;
-  --accent-hover: #a5c4b6;
-  --accent-text: #10140f;
-  --accent-soft: #263129;
-  --switch-off: #3a3f3b;
-  --switch-on: #8fb3a3;
+  --bg: #0e1525;
+  --bg-soft: #121b2e;
+  --surface: #17213a;
+  --text: #e6ebf4;
+  --muted: #9ba7be;
+  --border: #26324d;
+  --accent: #8fb4dc;
+  --accent-hover: #aac8e8;
+  --accent-text: #0b1220;
+  --accent-soft: #1c2a47;
+  --switch-off: #2d3953;
+  --switch-on: #8fb4dc;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  --slide-1: radial-gradient(120% 140% at 85% 20%, #2a3a33 0%, #222621 55%, #1b1d1b 100%);
-  --slide-2: radial-gradient(120% 140% at 15% 80%, #3a3128 0%, #24231f 60%, #1b1c1a 100%);
-  --slide-3: radial-gradient(120% 140% at 80% 80%, #312d3d 0%, #232224 60%, #1b1b1c 100%);
-  --slide-4: radial-gradient(120% 140% at 20% 20%, #263838 0%, #212523 60%, #1a1c1b 100%);
+  --slide-1: radial-gradient(120% 140% at 85% 20%, #1d3157 0%, #16213a 55%, #0f1729 100%);
+  --slide-2: radial-gradient(120% 140% at 15% 80%, #2a2d55 0%, #18203a 60%, #0f1628 100%);
+  --slide-3: radial-gradient(120% 140% at 80% 80%, #2b2550 0%, #191f38 60%, #0f1527 100%);
+  --slide-4: radial-gradient(120% 140% at 20% 20%, #173a4f 0%, #152238 60%, #0e1626 100%);
 }
 
 /* ==========================================================================
@@ -397,7 +397,7 @@ p {
 
 .theme-switch[aria-checked="true"] .theme-switch__thumb {
   transform: translateX(20px);
-  color: #476358;
+  color: #2c4a75;
 }
 
 .theme-switch[aria-checked="true"] .theme-switch__sun {

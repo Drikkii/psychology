@@ -1,24 +1,29 @@
 #!/bin/sh
-# Не даёт закоммитить секреты, приватные файлы и крупные бинарники.
+# Не даёт закоммитить секреты, личные документы и крупные файлы.
 # Подключение (один раз после клонирования): git config core.hooksPath .githooks
 
 status=0
-files=$(git diff --cached --name-only --diff-filter=ACM)
-[ -z "$files" ] && exit 0
+list=$(mktemp)
+git diff --cached --name-only --diff-filter=ACM -z > "$list"
+[ -s "$list" ] || { rm -f "$list"; exit 0; }
 
-for f in $files; do
+# Имена читаем через NUL-разделитель: пробелы и кириллица в именах не ломают проверку
+while IFS= read -r -d '' f; do
   case "$f" in
     *.env|.env.*|*.pem|*.key|*.p12|*.pfx|*.kdbx|*id_rsa*|*id_ed25519*|*.sqlite|*.db|*.stackdump|*credentials*|*secret*)
       echo "pre-commit: запрещённый файл: $f"; status=1 ;;
+    *.pdf|*.PDF|*.doc|*.docx|*.xls|*.xlsx|*.heic|*.HEIC)
+      echo "pre-commit: документ (возможны личные данные): $f"; status=1 ;;
   esac
   size=$(git cat-file -s ":$f" 2>/dev/null || echo 0)
-  if [ "$size" -gt 5242880 ]; then
-    echo "pre-commit: файл больше 5 МБ: $f"; status=1
+  if [ "$size" -gt 1048576 ]; then
+    echo "pre-commit: файл больше 1 МБ (сожмите изображение): $f"; status=1
   fi
-done
+done < "$list"
+rm -f "$list"
 
 pattern='-----BEGIN [A-Z ]*PRIVATE KEY|gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|AKIA[0-9A-Z]{16}|sk-[A-Za-z0-9_-]{20,}|xox[abpr]-[A-Za-z0-9-]{10,}|AIza[0-9A-Za-z_-]{35}|[0-9]{8,10}:AA[0-9A-Za-z_-]{30,}|(api[_-]?key|secret|password|passwd|token)["'"'"' ]*[:=]["'"'"' ]*[^"'"'"' ]{8,}'
-hits=$(git diff --cached -U0 --diff-filter=ACM | grep -E '^\+' | grep -niE -- "$pattern")
+hits=$(git diff --cached --no-textconv --no-ext-diff -U0 --diff-filter=ACM | grep -aE '^\+' | grep -naiE -- "$pattern")
 if [ -n "$hits" ]; then
   echo "pre-commit: похоже на секрет в добавленных строках:"
   echo "$hits" | cut -c1-160
