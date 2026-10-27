@@ -522,9 +522,7 @@ p {
 
 .slider {
   position: relative;
-  /* По ширине контента и не выше экрана: ширина ограничена высотой окна
-     с учётом пропорций фото 1671×941 */
-  max-width: min(calc(var(--container) - 2 * var(--gutter)), calc((100vh - 140px) * 1.776));
+  max-width: 1440px;
   margin: 0 auto;
   border-radius: var(--radius);
   overflow: hidden;
@@ -538,9 +536,9 @@ p {
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Слайд повторяет пропорции фото: картинка не увеличивается и не обрезается.
-   На широком экране текст лежит поверх светлой левой части фото,
-   на узком — фото сверху, текст под ним. */
+/* На широком экране слайд во всю ширину и на 20% ниже фото: картинка
+   заполняет его без искажений (чуть подрезается сверху и снизу), текст —
+   поверх светлой левой части. На узком — фото сверху целиком, текст под ним. */
 .slide {
   flex: 0 0 100%;
   display: grid;
@@ -581,9 +579,27 @@ p {
     --accent-text: #ffffff;
   }
 
+  /* На 20% ниже пропорций фото (941 × 0.8 ≈ 753). Если тексту не хватает
+     места, слайд вырастет, и фото заполнит его целиком. */
+  .slide {
+    position: relative;
+    aspect-ratio: 1671 / 753;
+  }
+
+  .slide__image {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    aspect-ratio: auto;
+    object-fit: cover;
+    /* держим в кадре лицо и фигуру */
+    object-position: 60% 35%;
+  }
+
   .slide::after {
     content: "";
-    grid-area: 1 / 1;
+    position: absolute;
+    inset: 0;
     background: linear-gradient(90deg, rgba(247, 244, 239, 0.88) 0%, rgba(247, 244, 239, 0.6) 32%, rgba(247, 244, 239, 0) 58%);
   }
 
@@ -711,6 +727,20 @@ p {
   width: 26px;
   opacity: 1;
   background: var(--accent);
+}
+
+@media (min-width: 901px) {
+  /* Точки лежат на фото — светлые, с лёгкой тенью для контраста */
+  .slider__dot::before {
+    background: #ffffff;
+    opacity: 0.6;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .slider__dot[aria-current="true"]::before {
+    background: #ffffff;
+    opacity: 1;
+  }
 }
 
 @media (max-width: 900px) {
