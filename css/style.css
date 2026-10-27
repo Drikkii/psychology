@@ -34,45 +34,45 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #0e1525;
-    --bg-soft: #121b2e;
-    --surface: #17213a;
-    --text: #e6ebf4;
-    --muted: #9ba7be;
-    --border: #26324d;
-    --accent: #8fb4dc;
-    --accent-hover: #aac8e8;
-    --accent-text: #0b1220;
-    --accent-soft: #1c2a47;
-    --switch-off: #2d3953;
-    --switch-on: #8fb4dc;
+    --bg: #1e2844;
+    --bg-soft: #232e4c;
+    --surface: #29355a;
+    --text: #e9edf7;
+    --muted: #a9b3cb;
+    --border: #36436b;
+    --accent: #9fc0e8;
+    --accent-hover: #b8d2f1;
+    --accent-text: #111a33;
+    --accent-soft: #2f3c64;
+    --switch-off: #3b4870;
+    --switch-on: #9fc0e8;
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-    --slide-1: radial-gradient(120% 140% at 85% 20%, #1d3157 0%, #16213a 55%, #0f1729 100%);
-    --slide-2: radial-gradient(120% 140% at 15% 80%, #2a2d55 0%, #18203a 60%, #0f1628 100%);
-    --slide-3: radial-gradient(120% 140% at 80% 80%, #2b2550 0%, #191f38 60%, #0f1527 100%);
-    --slide-4: radial-gradient(120% 140% at 20% 20%, #173a4f 0%, #152238 60%, #0e1626 100%);
+    --slide-1: radial-gradient(120% 140% at 85% 20%, #2d4778 0%, #232e4d 55%, #1e2844 100%);
+    --slide-2: radial-gradient(120% 140% at 15% 80%, #3a3b70 0%, #252f50 60%, #1e2844 100%);
+    --slide-3: radial-gradient(120% 140% at 80% 80%, #3b3469 0%, #272e4f 60%, #1e2844 100%);
+    --slide-4: radial-gradient(120% 140% at 20% 20%, #24506c 0%, #22314b 60%, #1e2844 100%);
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #0e1525;
-  --bg-soft: #121b2e;
-  --surface: #17213a;
-  --text: #e6ebf4;
-  --muted: #9ba7be;
-  --border: #26324d;
-  --accent: #8fb4dc;
-  --accent-hover: #aac8e8;
-  --accent-text: #0b1220;
-  --accent-soft: #1c2a47;
-  --switch-off: #2d3953;
-  --switch-on: #8fb4dc;
+  --bg: #1e2844;
+  --bg-soft: #232e4c;
+  --surface: #29355a;
+  --text: #e9edf7;
+  --muted: #a9b3cb;
+  --border: #36436b;
+  --accent: #9fc0e8;
+  --accent-hover: #b8d2f1;
+  --accent-text: #111a33;
+  --accent-soft: #2f3c64;
+  --switch-off: #3b4870;
+  --switch-on: #9fc0e8;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  --slide-1: radial-gradient(120% 140% at 85% 20%, #1d3157 0%, #16213a 55%, #0f1729 100%);
-  --slide-2: radial-gradient(120% 140% at 15% 80%, #2a2d55 0%, #18203a 60%, #0f1628 100%);
-  --slide-3: radial-gradient(120% 140% at 80% 80%, #2b2550 0%, #191f38 60%, #0f1527 100%);
-  --slide-4: radial-gradient(120% 140% at 20% 20%, #173a4f 0%, #152238 60%, #0e1626 100%);
+  --slide-1: radial-gradient(120% 140% at 85% 20%, #2d4778 0%, #232e4d 55%, #1e2844 100%);
+  --slide-2: radial-gradient(120% 140% at 15% 80%, #3a3b70 0%, #252f50 60%, #1e2844 100%);
+  --slide-3: radial-gradient(120% 140% at 80% 80%, #3b3469 0%, #272e4f 60%, #1e2844 100%);
+  --slide-4: radial-gradient(120% 140% at 20% 20%, #24506c 0%, #22314b 60%, #1e2844 100%);
 }
 
 /* ==========================================================================

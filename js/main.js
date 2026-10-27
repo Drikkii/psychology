@@ -37,7 +37,7 @@
   const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
   const themeSwitches = document.querySelectorAll('.theme-switch');
   const themeColorMeta = document.querySelectorAll('meta[name="theme-color"]');
-  const THEME_COLORS = { light: '#f7f4ef', dark: '#0e1525' };
+  const THEME_COLORS = { light: '#f7f4ef', dark: '#1e2844' };
 
   function systemTheme() {
     return darkQuery.matches ? 'dark' : 'light';
