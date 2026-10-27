@@ -536,32 +536,70 @@ p {
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Слайд повторяет пропорции фото: картинка не увеличивается и не обрезается.
+   На широком экране текст лежит поверх светлой левой части фото,
+   на узком — фото сверху, текст под ним. */
 .slide {
   flex: 0 0 100%;
-  min-height: clamp(440px, 68vh, 640px);
-  display: flex;
-  align-items: center;
-  padding: 56px clamp(24px, 8vw, 112px) 80px;
+  display: grid;
+  background: var(--bg-soft);
 }
 
-.slide--1 {
-  background: var(--slide-1);
-}
-
-.slide--2 {
-  background: var(--slide-2);
-}
-
-.slide--3 {
-  background: var(--slide-3);
-}
-
-.slide--4 {
-  background: var(--slide-4);
+.slide__image {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1671 / 941;
+  object-fit: contain;
 }
 
 .slide__content {
-  max-width: 640px;
+  grid-area: 1 / 1;
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  max-width: min(48%, 620px);
+  padding: 32px 0 56px clamp(24px, 7vw, 104px);
+  color: var(--text);
+}
+
+.slide__content h1,
+.slide__content h2 {
+  font-size: clamp(1.75rem, 3.1vw, 3rem);
+}
+
+@media (min-width: 901px) {
+  /* Фото светлое в любой теме — текст на нём всегда тёмный */
+  .slide {
+    --text: #2b2a28;
+    --muted: #514b43;
+    --border: rgba(43, 42, 40, 0.25);
+    --accent: #56756a;
+    --accent-hover: #476358;
+    --accent-text: #ffffff;
+  }
+
+  .slide::after {
+    content: "";
+    grid-area: 1 / 1;
+    background: linear-gradient(90deg, rgba(247, 244, 239, 0.88) 0%, rgba(247, 244, 239, 0.6) 32%, rgba(247, 244, 239, 0) 58%);
+  }
+
+  .slide__content .btn--outline {
+    background: rgba(255, 255, 255, 0.55);
+  }
+}
+
+@media (max-width: 900px) {
+  .slide {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .slide__content {
+    max-width: none;
+    padding: 24px 20px 88px;
+  }
 }
 
 .slide__eyebrow {
@@ -659,12 +697,7 @@ p {
   background: var(--accent);
 }
 
-@media (max-width: 700px) {
-  .slide {
-    align-items: flex-end;
-    padding: 40px 24px 96px;
-  }
-
+@media (max-width: 900px) {
   .slider__arrow {
     top: auto;
     bottom: 12px;
@@ -673,12 +706,13 @@ p {
     height: 44px;
   }
 
+  /* Стрелки по бокам от точек — правый край занят кнопками связи */
   .slider__arrow--prev {
-    left: 12px;
+    left: calc(50% - 120px);
   }
 
   .slider__arrow--next {
-    right: 12px;
+    right: calc(50% - 120px);
   }
 
   .slider__dots {
