@@ -66,7 +66,9 @@
 
     <section class="section" aria-label="Коротко обо мне">
       <div class="container about">
-        <div class="photo-placeholder">Фото психолога<br>(заглушка, 4:5)</div>
+        <div class="about__photo">
+          <img src="img/yuliya.webp" alt="Юлия Шевченко, психолог" width="820" height="1168" decoding="async">
+        </div>
         <div class="about__text">
           <p class="slide__text">Здравствуйте! Меня зовут Юлия. Я магистр психологии, клинический психолог, сексолог, гипнолог и семейный психотерапевт.</p>
           <p>Если вы здесь, значит, вы уже практически на 50% решили свою проблему: осознать её — огромный шаг. В остальном я вам обязательно помогу. Со мной семьи становятся счастливыми, а личностный рост не знает границ!</p>
@@ -134,57 +136,361 @@
         <div class="carousel__viewport">
           <ul class="carousel__track" aria-label="Дипломы и сертификаты">
             <li class="carousel__item">
-            <figure class="cert">
-              <div class="cert__image">
-                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg><span>Скан документа<br>(заглушка)</span></div>
-              </div>
-              <figcaption>Диплом о высшем образовании <span class="todo">[название, год]</span></figcaption>
-            </figure>
-          </li>
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="0" aria-label="Открыть: Диплом Магистра по Психологии">
+                  <img class="cert__image" src="img/certs/thumb/cert-01.webp" alt="Диплом Магистра по Психологии" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Диплом Магистра по Психологии</figcaption>
+              </figure>
+            </li>
             <li class="carousel__item">
-            <figure class="cert">
-              <div class="cert__image">
-                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg><span>Скан документа<br>(заглушка)</span></div>
-              </div>
-              <figcaption>Диплом о профессиональной переподготовке <span class="todo">[название, год]</span></figcaption>
-            </figure>
-          </li>
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="1" aria-label="Открыть: Диплом по клинической психологии">
+                  <img class="cert__image" src="img/certs/thumb/cert-02.webp" alt="Диплом по клинической психологии" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Диплом по клинической психологии</figcaption>
+              </figure>
+            </li>
             <li class="carousel__item">
-            <figure class="cert">
-              <div class="cert__image">
-                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg><span>Скан документа<br>(заглушка)</span></div>
-              </div>
-              <figcaption>Сертификат <span class="todo">[название, год]</span></figcaption>
-            </figure>
-          </li>
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="2" aria-label="Открыть: Магистратура-Специалитет по Психологии">
+                  <img class="cert__image" src="img/certs/thumb/cert-03.webp" alt="Магистратура-Специалитет по Психологии" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Магистратура-Специалитет по Психологии</figcaption>
+              </figure>
+            </li>
             <li class="carousel__item">
-            <figure class="cert">
-              <div class="cert__image">
-                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg><span>Скан документа<br>(заглушка)</span></div>
-              </div>
-              <figcaption>Сертификат <span class="todo">[название, год]</span></figcaption>
-            </figure>
-          </li>
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="3" aria-label="Открыть: Диплом Специалиста Юрист">
+                  <img class="cert__image" src="img/certs/thumb/cert-04.webp" alt="Диплом Специалиста Юрист" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Диплом Специалиста Юрист</figcaption>
+              </figure>
+            </li>
             <li class="carousel__item">
-            <figure class="cert">
-              <div class="cert__image">
-                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg><span>Скан документа<br>(заглушка)</span></div>
-              </div>
-              <figcaption>Сертификат <span class="todo">[название, год]</span></figcaption>
-            </figure>
-          </li>
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="4" aria-label="Открыть: Сексология">
+                  <img class="cert__image" src="img/certs/thumb/cert-05.webp" alt="Сексология" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Сексология</figcaption>
+              </figure>
+            </li>
             <li class="carousel__item">
-            <figure class="cert">
-              <div class="cert__image">
-                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg><span>Скан документа<br>(заглушка)</span></div>
-              </div>
-              <figcaption>Сертификат <span class="todo">[название, год]</span></figcaption>
-            </figure>
-          </li>
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="5" aria-label="Открыть: Диагностика и лечение сексуальных расстройств">
+                  <img class="cert__image" src="img/certs/thumb/cert-06.webp" alt="Диагностика и лечение сексуальных расстройств" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Диагностика и лечение сексуальных расстройств</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="6" aria-label="Открыть: Свидетельство">
+                  <img class="cert__image" src="img/certs/thumb/cert-07.webp" alt="Свидетельство" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Свидетельство</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="7" aria-label="Открыть: Гипноз и гипнотерапия с пациентами, страдающими от последствий психической травмы">
+                  <img class="cert__image" src="img/certs/thumb/cert-08.webp" alt="Гипноз и гипнотерапия с пациентами, страдающими от последствий психической травмы" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Гипноз и гипнотерапия с пациентами, страдающими от последствий психической травмы</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="8" aria-label="Открыть: Гипноз и гипнотерапия с пациентами, страдающими невротическими расстройствами">
+                  <img class="cert__image" src="img/certs/thumb/cert-09.webp" alt="Гипноз и гипнотерапия с пациентами, страдающими невротическими расстройствами" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Гипноз и гипнотерапия с пациентами, страдающими невротическими расстройствами</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="9" aria-label="Открыть: Гипноз и гипнотерапия с пациентами, страдающими от соматических заболеваний">
+                  <img class="cert__image" src="img/certs/thumb/cert-10.webp" alt="Гипноз и гипнотерапия с пациентами, страдающими от соматических заболеваний" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Гипноз и гипнотерапия с пациентами, страдающими от соматических заболеваний</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="10" aria-label="Открыть: Классический подход к гипнозу">
+                  <img class="cert__image" src="img/certs/thumb/cert-11.webp" alt="Классический подход к гипнозу" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Классический подход к гипнозу</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="11" aria-label="Открыть: Классический подход к гипнозу — гипнотические индукции и наведение гипноза">
+                  <img class="cert__image" src="img/certs/thumb/cert-12.webp" alt="Классический подход к гипнозу — гипнотические индукции и наведение гипноза" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Классический подход к гипнозу — гипнотические индукции и наведение гипноза</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="12" aria-label="Открыть: Классический подход к гипнозу — управление гипнотическим состоянием">
+                  <img class="cert__image" src="img/certs/thumb/cert-13.webp" alt="Классический подход к гипнозу — управление гипнотическим состоянием" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Классический подход к гипнозу — управление гипнотическим состоянием</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="13" aria-label="Открыть: Когнитивно-поведенческая терапия, теория, стратегия, техники">
+                  <img class="cert__image" src="img/certs/thumb/cert-14.webp" alt="Когнитивно-поведенческая терапия, теория, стратегия, техники" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Когнитивно-поведенческая терапия, теория, стратегия, техники</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="14" aria-label="Открыть: КПТ в действии — практические кейсы и техники">
+                  <img class="cert__image" src="img/certs/thumb/cert-15.webp" alt="КПТ в действии — практические кейсы и техники" loading="lazy" decoding="async">
+                </button>
+                <figcaption>КПТ в действии — практические кейсы и техники</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="15" aria-label="Открыть: КПТ второй и третьей волны — трансформация техник работы с эмоциями от реструктуризации мышления до сострадания и принятия">
+                  <img class="cert__image" src="img/certs/thumb/cert-16.webp" alt="КПТ второй и третьей волны — трансформация техник работы с эмоциями от реструктуризации мышления до сострадания и принятия" loading="lazy" decoding="async">
+                </button>
+                <figcaption>КПТ второй и третьей волны — трансформация техник работы с эмоциями от реструктуризации мышления до сострадания и принятия</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="16" aria-label="Открыть: Личностно-ориентированный подход в психотерапии">
+                  <img class="cert__image" src="img/certs/thumb/cert-17.webp" alt="Личностно-ориентированный подход в психотерапии" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Личностно-ориентированный подход в психотерапии</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="17" aria-label="Открыть: Нейропсихологическая помощь">
+                  <img class="cert__image" src="img/certs/thumb/cert-18.webp" alt="Нейропсихологическая помощь" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Нейропсихологическая помощь</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="18" aria-label="Открыть: Основы работы с ПТСР">
+                  <img class="cert__image" src="img/certs/thumb/cert-19.webp" alt="Основы работы с ПТСР" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Основы работы с ПТСР</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="19" aria-label="Открыть: Поведенческий подход в работе">
+                  <img class="cert__image" src="img/certs/thumb/cert-20.webp" alt="Поведенческий подход в работе" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Поведенческий подход в работе</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="20" aria-label="Открыть: При депрессии">
+                  <img class="cert__image" src="img/certs/thumb/cert-21.webp" alt="При депрессии" loading="lazy" decoding="async">
+                </button>
+                <figcaption>При депрессии</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="21" aria-label="Открыть: При тревоге">
+                  <img class="cert__image" src="img/certs/thumb/cert-22.webp" alt="При тревоге" loading="lazy" decoding="async">
+                </button>
+                <figcaption>При тревоге</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="22" aria-label="Открыть: Проблемы практической и прикладной психологии">
+                  <img class="cert__image" src="img/certs/thumb/cert-23.webp" alt="Проблемы практической и прикладной психологии" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Проблемы практической и прикладной психологии</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="23" aria-label="Открыть: Семейная, групповая">
+                  <img class="cert__image" src="img/certs/thumb/cert-24.webp" alt="Семейная, групповая" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Семейная, групповая</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="24" aria-label="Открыть: Сертификат Слушателя">
+                  <img class="cert__image" src="img/certs/thumb/cert-25.webp" alt="Сертификат Слушателя" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Сертификат Слушателя</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="25" aria-label="Открыть: Сертификат стратегии защиты, сопротивления">
+                  <img class="cert__image" src="img/certs/thumb/cert-26.webp" alt="Сертификат стратегии защиты, сопротивления" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Сертификат стратегии защиты, сопротивления</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="26" aria-label="Открыть: Сертификат участника конгресса">
+                  <img class="cert__image" src="img/certs/thumb/cert-27.webp" alt="Сертификат участника конгресса" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Сертификат участника конгресса</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="27" aria-label="Открыть: Современные методы диагностики психического развития детей">
+                  <img class="cert__image" src="img/certs/thumb/cert-28.webp" alt="Современные методы диагностики психического развития детей" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Современные методы диагностики психического развития детей</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="28" aria-label="Открыть: Стратегии психологической помощи при нехимических зависимостях">
+                  <img class="cert__image" src="img/certs/thumb/cert-29.webp" alt="Стратегии психологической помощи при нехимических зависимостях" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Стратегии психологической помощи при нехимических зависимостях</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="29" aria-label="Открыть: Стрессоустойчивость в современном мире">
+                  <img class="cert__image" src="img/certs/thumb/cert-30.webp" alt="Стрессоустойчивость в современном мире" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Стрессоустойчивость в современном мире</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="30" aria-label="Открыть: Технологии и техники работы с острой травмой">
+                  <img class="cert__image" src="img/certs/thumb/cert-31.webp" alt="Технологии и техники работы с острой травмой" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Технологии и техники работы с острой травмой</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="31" aria-label="Открыть: Трансовые и гипнотические техники в практике работы с клиентами">
+                  <img class="cert__image" src="img/certs/thumb/cert-32.webp" alt="Трансовые и гипнотические техники в практике работы с клиентами" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Трансовые и гипнотические техники в практике работы с клиентами</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="32" aria-label="Открыть: Фармакология">
+                  <img class="cert__image" src="img/certs/thumb/cert-33.webp" alt="Фармакология" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Фармакология</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="33" aria-label="Открыть: Традиционные и инновационные подходы в индивидуальной, семейной и групповой психотерапии">
+                  <img class="cert__image" src="img/certs/thumb/cert-34.webp" alt="Традиционные и инновационные подходы в индивидуальной, семейной и групповой психотерапии" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Традиционные и инновационные подходы в индивидуальной, семейной и групповой психотерапии</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="34" aria-label="Открыть: Школа волонтеров в психиатрии">
+                  <img class="cert__image" src="img/certs/thumb/cert-35.webp" alt="Школа волонтеров в психиатрии" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Школа волонтеров в психиатрии</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="35" aria-label="Открыть: Школьный буллинг">
+                  <img class="cert__image" src="img/certs/thumb/cert-36.webp" alt="Школьный буллинг" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Школьный буллинг</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="36" aria-label="Открыть: Child in a Digital World 2024">
+                  <img class="cert__image" src="img/certs/thumb/cert-37.webp" alt="Child in a Digital World 2024" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Child in a Digital World 2024</figcaption>
+              </figure>
+            </li>
+            <li class="carousel__item">
+              <figure class="cert">
+                <button class="cert__open" type="button" data-lightbox-open="37" aria-label="Открыть: Child in a Digital World 2025">
+                  <img class="cert__image" src="img/certs/thumb/cert-38.webp" alt="Child in a Digital World 2025" loading="lazy" decoding="async">
+                </button>
+                <figcaption>Child in a Digital World 2025</figcaption>
+              </figure>
+            </li>
           </ul>
         </div>
       </div>
     </section>
+
+    <dialog class="lightbox" data-lightbox aria-label="Просмотр документа">
+      <template data-lightbox-item data-src="img/certs/full/cert-01.webp" data-title="Диплом Магистра по Психологии"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-02.webp" data-title="Диплом по клинической психологии"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-03.webp" data-title="Магистратура-Специалитет по Психологии"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-04.webp" data-title="Диплом Специалиста Юрист"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-05.webp" data-title="Сексология"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-06.webp" data-title="Диагностика и лечение сексуальных расстройств"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-07.webp" data-title="Свидетельство"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-08.webp" data-title="Гипноз и гипнотерапия с пациентами, страдающими от последствий психической травмы"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-09.webp" data-title="Гипноз и гипнотерапия с пациентами, страдающими невротическими расстройствами"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-10.webp" data-title="Гипноз и гипнотерапия с пациентами, страдающими от соматических заболеваний"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-11.webp" data-title="Классический подход к гипнозу"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-12.webp" data-title="Классический подход к гипнозу — гипнотические индукции и наведение гипноза"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-13.webp" data-title="Классический подход к гипнозу — управление гипнотическим состоянием"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-14.webp" data-title="Когнитивно-поведенческая терапия, теория, стратегия, техники"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-15.webp" data-title="КПТ в действии — практические кейсы и техники"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-16.webp" data-title="КПТ второй и третьей волны — трансформация техник работы с эмоциями от реструктуризации мышления до сострадания и принятия"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-17.webp" data-title="Личностно-ориентированный подход в психотерапии"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-18.webp" data-title="Нейропсихологическая помощь"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-19.webp" data-title="Основы работы с ПТСР"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-20.webp" data-title="Поведенческий подход в работе"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-21.webp" data-title="При депрессии"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-22.webp" data-title="При тревоге"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-23.webp" data-title="Проблемы практической и прикладной психологии"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-24.webp" data-title="Семейная, групповая"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-25.webp" data-title="Сертификат Слушателя"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-26.webp" data-title="Сертификат стратегии защиты, сопротивления"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-27.webp" data-title="Сертификат участника конгресса"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-28.webp" data-title="Современные методы диагностики психического развития детей"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-29.webp" data-title="Стратегии психологической помощи при нехимических зависимостях"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-30.webp" data-title="Стрессоустойчивость в современном мире"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-31.webp" data-title="Технологии и техники работы с острой травмой"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-32.webp" data-title="Трансовые и гипнотические техники в практике работы с клиентами"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-33.webp" data-title="Фармакология"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-34.webp" data-title="Традиционные и инновационные подходы в индивидуальной, семейной и групповой психотерапии"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-35.webp" data-title="Школа волонтеров в психиатрии"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-36.webp" data-title="Школьный буллинг"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-37.webp" data-title="Child in a Digital World 2024"></template>
+      <template data-lightbox-item data-src="img/certs/full/cert-38.webp" data-title="Child in a Digital World 2025"></template>
+      <button class="lightbox__close" type="button" data-lightbox-close aria-label="Закрыть">×</button>
+      <button class="slider__arrow lightbox__arrow lightbox__arrow--prev" type="button" data-lightbox-prev aria-label="Предыдущий документ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <figure class="lightbox__figure">
+        <img class="lightbox__image" alt="" data-lightbox-image>
+        <figcaption class="lightbox__caption" data-lightbox-caption></figcaption>
+      </figure>
+      <button class="slider__arrow lightbox__arrow lightbox__arrow--next" type="button" data-lightbox-next aria-label="Следующий документ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 18l6-6-6-6"/></svg></button>
+    </dialog>
 
     <section class="section" aria-labelledby="approach-title">
       <div class="container">

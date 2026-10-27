@@ -120,9 +120,11 @@
       return originals.map((el) => {
         const clone = el.cloneNode(true);
         clone.classList.add('is-clone');
+        // Копии кликабельны мышью (их видно у краёв ленты), но скрыты от
+        // скринридеров и клавиатуры
         clone.setAttribute('aria-hidden', 'true');
-        clone.setAttribute('inert', '');
         clone.querySelectorAll('[id]').forEach((node) => node.removeAttribute('id'));
+        clone.querySelectorAll('a, button').forEach((node) => node.setAttribute('tabindex', '-1'));
         return clone;
       });
     }
@@ -191,7 +193,22 @@
       const dx = event.clientX - startX;
       const dy = event.clientY - startY;
       startX = null;
-      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) move(dx < 0 ? 1 : -1);
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+        suppressClick = true;
+        move(dx < 0 ? 1 : -1);
+      }
+    });
+
+    // После свайпа браузер присылает click — не даём ему открыть карточку
+    let suppressClick = false;
+    viewport.addEventListener('click', (event) => {
+      if (!suppressClick) return;
+      suppressClick = false;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+    viewport.addEventListener('pointerdown', () => {
+      suppressClick = false;
     });
 
     viewport.addEventListener('pointercancel', () => {
@@ -297,6 +314,51 @@
     carousel.querySelector('[data-carousel-prev]').addEventListener('click', () => loop.move(-1));
     carousel.querySelector('[data-carousel-next]').addEventListener('click', () => loop.move(1));
   });
+
+  /* ------------------------------------------------------------------------
+     Просмотр документа во весь экран: клик по сертификату, стрелки,
+     клавиши ←/→, Esc и клик по фону закрывают.
+     ------------------------------------------------------------------------ */
+  const lightbox = document.querySelector('[data-lightbox]');
+
+  if (lightbox && typeof lightbox.showModal === 'function') {
+    const items = Array.from(lightbox.querySelectorAll('[data-lightbox-item]')).map((el) => ({
+      src: el.getAttribute('data-src'),
+      title: el.getAttribute('data-title')
+    }));
+    const image = lightbox.querySelector('[data-lightbox-image]');
+    const caption = lightbox.querySelector('[data-lightbox-caption]');
+    let current = 0;
+
+    function show(index) {
+      current = (index + items.length) % items.length;
+      image.src = items[current].src;
+      image.alt = items[current].title;
+      caption.textContent = items[current].title;
+      // заранее грузим соседний документ, чтобы листание было мгновенным
+      new Image().src = items[(current + 1) % items.length].src;
+    }
+
+    document.addEventListener('click', (event) => {
+      const opener = event.target.closest('[data-lightbox-open]');
+      if (!opener) return;
+      show(Number(opener.getAttribute('data-lightbox-open')));
+      lightbox.showModal();
+    });
+
+    lightbox.querySelector('[data-lightbox-prev]').addEventListener('click', () => show(current - 1));
+    lightbox.querySelector('[data-lightbox-next]').addEventListener('click', () => show(current + 1));
+    lightbox.querySelector('[data-lightbox-close]').addEventListener('click', () => lightbox.close());
+
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) lightbox.close();
+    });
+
+    lightbox.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') show(current - 1);
+      else if (event.key === 'ArrowRight') show(current + 1);
+    });
+  }
 
   /* ------------------------------------------------------------------------
      Согласие на cookie и Яндекс Метрика.
