@@ -85,6 +85,7 @@
 }
 
 html {
+  -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-behavior: smooth;
@@ -98,6 +99,7 @@ body {
   background: var(--bg);
   color: var(--text);
   overflow-x: hidden;
+  overflow-x: clip;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
@@ -154,7 +156,7 @@ p {
   width: 100%;
   max-width: var(--container);
   margin: 0 auto;
-  padding: 0 var(--gutter);
+  padding: 0 max(var(--gutter), env(safe-area-inset-right)) 0 max(var(--gutter), env(safe-area-inset-left));
 }
 
 .muted {
@@ -269,6 +271,7 @@ p {
   position: sticky;
   top: 0;
   z-index: 50;
+  background: var(--bg);
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   -webkit-backdrop-filter: saturate(160%) blur(12px);
   backdrop-filter: saturate(160%) blur(12px);
@@ -518,7 +521,7 @@ p {
    ========================================================================== */
 /* Боковой зазор растёт с шириной экрана: 16px на телефоне, до 48px на десктопе */
 .hero {
-  padding: 20px clamp(var(--gutter), 3.5vw, 48px) 0;
+  padding: 20px max(clamp(var(--gutter), 3.5vw, 48px), env(safe-area-inset-right)) 0 max(clamp(var(--gutter), 3.5vw, 48px), env(safe-area-inset-left));
 }
 
 .slider {
@@ -670,6 +673,7 @@ p {
   margin-top: -26px;
   border: 1px solid var(--border);
   border-radius: 50%;
+  background: var(--surface);
   background: color-mix(in srgb, var(--surface) 85%, transparent);
   color: var(--text);
   box-shadow: var(--shadow);
@@ -1235,6 +1239,7 @@ p {
 .lightbox {
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   max-width: none;
   max-height: none;
   margin: 0;
@@ -1254,6 +1259,11 @@ p {
   background: rgba(8, 12, 24, 0.88);
 }
 
+/* Начальный фокус окна — на документе, а не на кнопке «×» (иначе Safari сразу рисует кольцо) */
+.lightbox__figure:focus {
+  outline: none;
+}
+
 .lightbox__figure {
   margin: 0;
   display: flex;
@@ -1267,6 +1277,7 @@ p {
 .lightbox__image {
   max-width: 100%;
   max-height: calc(100vh - 120px);
+  max-height: calc(100dvh - 120px);
   border-radius: 6px;
   background: #ffffff;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
@@ -1316,6 +1327,7 @@ p {
 
   .lightbox__image {
     max-height: calc(100vh - 220px);
+    max-height: calc(100dvh - 220px);
   }
 
   .lightbox__arrow {
@@ -1493,6 +1505,7 @@ p {
   height: 52px;
   border: 1px solid var(--border);
   border-radius: 50%;
+  background: var(--surface);
   background: color-mix(in srgb, var(--surface) 92%, transparent);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
@@ -1530,9 +1543,9 @@ p {
    ========================================================================== */
 .cookie-banner {
   position: fixed;
-  left: var(--gutter);
-  right: var(--gutter);
-  bottom: var(--gutter);
+  left: max(var(--gutter), env(safe-area-inset-left));
+  right: max(var(--gutter), env(safe-area-inset-right));
+  bottom: calc(var(--gutter) + env(safe-area-inset-bottom));
   z-index: 60;
   display: flex;
   align-items: center;

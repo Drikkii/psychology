@@ -29,6 +29,15 @@
     }
   }
 
+  // Safari до 14 знает только устаревший addListener
+  function onMediaChange(query, handler) {
+    if (query.addEventListener) {
+      query.addEventListener('change', handler);
+    } else if (query.addListener) {
+      query.addListener(handler);
+    }
+  }
+
   /* ------------------------------------------------------------------------
      Тема: по умолчанию системная, переключатель запоминает ручной выбор.
      Если ручной выбор совпал с системным — снова следуем за системой.
@@ -68,7 +77,7 @@
     });
   });
 
-  darkQuery.addEventListener('change', () => {
+  onMediaChange(darkQuery, () => {
     if (!storedTheme()) applyTheme(systemTheme());
   });
 
@@ -102,7 +111,7 @@
       }
     });
 
-    window.matchMedia('(min-width: 901px)').addEventListener('change', (event) => {
+    onMediaChange(window.matchMedia('(min-width: 901px)'), (event) => {
       if (event.matches) setMenu(false);
     });
   }
