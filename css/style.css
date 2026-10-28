@@ -1590,3 +1590,11 @@ p {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* Ряд кнопок на служебных страницах (404) */
+.page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
