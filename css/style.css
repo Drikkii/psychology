@@ -550,8 +550,10 @@ p {
   grid-area: 1 / 1;
   width: 100%;
   height: auto;
+  /* Единая рамка для фото разных пропорций; лишнее срезается со стороны пустой стены */
   aspect-ratio: 1671 / 941;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: 70% 30%;
 }
 
 .slide__content {
