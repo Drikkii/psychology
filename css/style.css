@@ -415,7 +415,21 @@ p {
   display: none;
 }
 
+/* Копия переключателя в шапке — только на мобилке, рядом с бургером */
+.theme-switch--bar {
+  display: none;
+}
+
 @media (max-width: 900px) {
+  .js .theme-switch--bar {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
+  .js .theme-switch--nav {
+    display: none;
+  }
+
   .js .nav-toggle {
     display: inline-grid;
     place-items: center;
@@ -472,6 +486,12 @@ p {
 
   .header__inner {
     flex-wrap: wrap;
+    column-gap: 12px;
+  }
+
+  .theme-switch--bar,
+  .nav-toggle {
+    flex: none;
   }
 
   .site-nav {
@@ -510,9 +530,12 @@ p {
   .nav__actions {
     justify-content: space-between;
   }
+}
 
-  .theme-switch__label {
-    display: inline;
+/* Узкие телефоны (iPhone SE и т.п.): логотип, тумблер и бургер — в одну строку */
+@media (max-width: 360px) {
+  .logo__name {
+    font-size: 1.15rem;
   }
 }
 
