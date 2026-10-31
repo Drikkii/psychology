@@ -46,7 +46,7 @@
   const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
   const themeSwitches = document.querySelectorAll('.theme-switch');
   const themeColorMeta = document.querySelectorAll('meta[name="theme-color"]');
-  const THEME_COLORS = { light: '#f7f4ef', dark: '#1e2844' };
+  const THEME_COLORS = { light: '#f7f4ef', dark: '#000000' };
 
   function systemTheme() {
     return darkQuery.matches ? 'dark' : 'light';
@@ -484,6 +484,20 @@
   renderConsent();
   const consent = readConsent();
   if (consent && consent.analytics) loadMetrika();
+
+  // Плавающие кнопки прячутся, пока видны кнопки связи в слайде (CSS — только на мобилке)
+  const slideContacts = document.querySelectorAll('.slide__actions--contacts');
+  if (slideContacts.length && 'IntersectionObserver' in window) {
+    const visibleContacts = new Set();
+    const contactsObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) visibleContacts.add(entry.target);
+        else visibleContacts.delete(entry.target);
+      });
+      root.classList.toggle('contacts-in-view', visibleContacts.size > 0);
+    });
+    slideContacts.forEach((el) => contactsObserver.observe(el));
+  }
 
   // Цели Метрики: клики по кнопкам связи (data-goal="telegram" и т. п.)
   document.addEventListener('click', (event) => {
