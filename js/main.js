@@ -437,7 +437,6 @@
 
   function showBanner(show) {
     banner.hidden = !show;
-    root.classList.toggle('cookie-open', show);
   }
 
   function renderConsent() {
@@ -509,32 +508,23 @@
       }
     });
 
-    // У низа страницы облачко останавливается над строкой с политикой
+    // Облачко всегда на виду: останавливается над строкой с политикой и над плашкой cookie
     const footerLegal = document.querySelector('.footer__legal');
+    const cookieBanner = document.querySelector('[data-cookie-banner]');
     if (footerLegal) {
-      const FAB_LEGAL_GAP = 8;
+      const FAB_GAP = 8;
       const liftFab = () => {
-        const overlap = window.innerHeight - footerLegal.getBoundingClientRect().top + FAB_LEGAL_GAP;
-        fab.style.transform = overlap > 0 ? 'translateY(-' + overlap + 'px)' : '';
+        let lift = window.innerHeight - footerLegal.getBoundingClientRect().top + FAB_GAP;
+        if (cookieBanner && !cookieBanner.hidden) {
+          lift = Math.max(lift, window.innerHeight - cookieBanner.getBoundingClientRect().top + FAB_GAP);
+        }
+        fab.style.transform = lift > 0 ? 'translateY(-' + lift + 'px)' : '';
       };
       liftFab();
       window.addEventListener('scroll', liftFab, { passive: true });
       window.addEventListener('resize', liftFab);
+      if (cookieBanner && 'ResizeObserver' in window) new ResizeObserver(liftFab).observe(cookieBanner);
     }
-  }
-
-  // Облачко прячется, пока видны кнопки всех способов связи (CSS — только на мобилке)
-  const slideContacts = document.querySelectorAll('.contact-buttons');
-  if (slideContacts.length && 'IntersectionObserver' in window) {
-    const visibleContacts = new Set();
-    const contactsObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) visibleContacts.add(entry.target);
-        else visibleContacts.delete(entry.target);
-      });
-      root.classList.toggle('contacts-in-view', visibleContacts.size > 0);
-    });
-    slideContacts.forEach((el) => contactsObserver.observe(el));
   }
 
   // Цели Метрики: клики по кнопкам связи (data-goal="telegram" и т. п.)
