@@ -34,45 +34,45 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #000000;
-    --bg-soft: #1c1c1e;
-    --surface: #2c2c2e;
+    --bg: #2c2c2e;
+    --bg-soft: #323234;
+    --surface: #3a3a3d;
     --text: #f5f5f7;
-    --muted: #a1a1a6;
-    --border: #48484a;
+    --muted: #b8b8bc;
+    --border: #58585b;
     --accent: #9fc0e8;
     --accent-hover: #b8d2f1;
     --accent-text: #0b0b0c;
-    --accent-soft: #3a3a3c;
-    --switch-off: #545458;
+    --accent-soft: #464649;
+    --switch-off: #626266;
     --switch-on: #9fc0e8;
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-    --slide-1: radial-gradient(120% 140% at 85% 20%, #48484a 0%, #2c2c2e 55%, #000000 100%);
-    --slide-2: radial-gradient(120% 140% at 15% 80%, #48484a 0%, #2c2c2e 60%, #000000 100%);
-    --slide-3: radial-gradient(120% 140% at 80% 80%, #48484a 0%, #2c2c2e 60%, #000000 100%);
-    --slide-4: radial-gradient(120% 140% at 20% 20%, #48484a 0%, #2c2c2e 60%, #000000 100%);
+    --slide-1: radial-gradient(120% 140% at 85% 20%, #58585b 0%, #3a3a3d 55%, #2c2c2e 100%);
+    --slide-2: radial-gradient(120% 140% at 15% 80%, #58585b 0%, #3a3a3d 60%, #2c2c2e 100%);
+    --slide-3: radial-gradient(120% 140% at 80% 80%, #58585b 0%, #3a3a3d 60%, #2c2c2e 100%);
+    --slide-4: radial-gradient(120% 140% at 20% 20%, #58585b 0%, #3a3a3d 60%, #2c2c2e 100%);
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #000000;
-  --bg-soft: #1c1c1e;
-  --surface: #2c2c2e;
+  --bg: #2c2c2e;
+  --bg-soft: #323234;
+  --surface: #3a3a3d;
   --text: #f5f5f7;
-  --muted: #a1a1a6;
-  --border: #48484a;
+  --muted: #b8b8bc;
+  --border: #58585b;
   --accent: #9fc0e8;
   --accent-hover: #b8d2f1;
   --accent-text: #0b0b0c;
-  --accent-soft: #3a3a3c;
-  --switch-off: #545458;
+  --accent-soft: #464649;
+  --switch-off: #626266;
   --switch-on: #9fc0e8;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  --slide-1: radial-gradient(120% 140% at 85% 20%, #48484a 0%, #2c2c2e 55%, #000000 100%);
-  --slide-2: radial-gradient(120% 140% at 15% 80%, #48484a 0%, #2c2c2e 60%, #000000 100%);
-  --slide-3: radial-gradient(120% 140% at 80% 80%, #48484a 0%, #2c2c2e 60%, #000000 100%);
-  --slide-4: radial-gradient(120% 140% at 20% 20%, #48484a 0%, #2c2c2e 60%, #000000 100%);
+  --slide-1: radial-gradient(120% 140% at 85% 20%, #58585b 0%, #3a3a3d 55%, #2c2c2e 100%);
+  --slide-2: radial-gradient(120% 140% at 15% 80%, #58585b 0%, #3a3a3d 60%, #2c2c2e 100%);
+  --slide-3: radial-gradient(120% 140% at 80% 80%, #58585b 0%, #3a3a3d 60%, #2c2c2e 100%);
+  --slide-4: radial-gradient(120% 140% at 20% 20%, #58585b 0%, #3a3a3d 60%, #2c2c2e 100%);
 }
 
 /* ==========================================================================
@@ -1556,10 +1556,12 @@ p {
   }
 }
 
+/* Колонки прижаты влево: справа остаётся место для облачка «Написать» */
 .footer__grid {
   display: grid;
-  gap: 32px;
-  grid-template-columns: 2fr 1fr 1fr;
+  gap: 32px clamp(24px, 3vw, 48px);
+  grid-template-columns: minmax(180px, 250px) auto auto;
+  justify-content: start;
 }
 
 @media (max-width: 800px) {
@@ -1691,6 +1693,38 @@ p {
   flex: none;
   width: 22px;
   height: 22px;
+}
+
+/* На компьютере: в полтора раза крупнее и выше панели задач Windows и Dock на Mac */
+@media (min-width: 901px) {
+  .js .fab {
+    bottom: 72px;
+  }
+
+  .fab__toggle {
+    padding: 27px 33px 27px 39px;
+    border-radius: 40px 0 0 40px;
+    font-size: 1.95rem;
+  }
+
+  .fab__menu {
+    width: 100%;
+    padding: 12px 12px 12px 12px;
+    border-radius: 30px 0 0 30px;
+  }
+
+  .fab__link {
+    gap: 16px;
+    min-height: 66px;
+    padding: 12px 24px 12px 18px;
+    border-radius: 18px;
+    font-size: 1.5rem;
+  }
+
+  .fab__link svg {
+    width: 33px;
+    height: 33px;
+  }
 }
 
 /* ==========================================================================

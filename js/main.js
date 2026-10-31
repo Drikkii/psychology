@@ -46,7 +46,8 @@
   const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
   const themeSwitches = document.querySelectorAll('.theme-switch');
   const themeColorMeta = document.querySelectorAll('meta[name="theme-color"]');
-  const THEME_COLORS = { light: '#f7f4ef', dark: '#000000' };
+  const favicons = document.querySelectorAll('link[rel="icon"]');
+  const THEME_COLORS = { light: '#f7f4ef', dark: '#2c2c2e' };
 
   function systemTheme() {
     return darkQuery.matches ? 'dark' : 'light';
@@ -56,6 +57,9 @@
     root.setAttribute('data-theme', theme);
     themeSwitches.forEach((el) => el.setAttribute('aria-checked', String(theme === 'dark')));
     themeColorMeta.forEach((el) => el.setAttribute('content', THEME_COLORS[theme]));
+    // Значок вкладки в цвет темы: favicon.svg / favicon-dark.svg
+    const iconSuffix = theme === 'dark' ? '-dark' : '';
+    favicons.forEach((el) => el.setAttribute('href', el.getAttribute('href').replace(/(-dark)?\.(png|svg)$/, iconSuffix + '.$2')));
   }
 
   function storedTheme() {
@@ -518,6 +522,8 @@
         if (cookieBanner && !cookieBanner.hidden) {
           lift = Math.max(lift, window.innerHeight - cookieBanner.getBoundingClientRect().top + FAB_GAP);
         }
+        // облачко и так стоит на этой высоте от низа экрана
+        lift -= parseFloat(getComputedStyle(fab).bottom) || 0;
         fab.style.transform = lift > 0 ? 'translateY(-' + lift + 'px)' : '';
       };
       liftFab();
