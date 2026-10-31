@@ -1656,6 +1656,10 @@ p {
   box-shadow: var(--shadow);
   visibility: hidden;
   transform: translateX(100%);
+}
+
+/* Анимация только после первого нажатия, иначе Safari проигрывает её при загрузке */
+.fab.is-animated .fab__menu {
   transition: transform 0.25s ease, visibility 0.25s;
 }
 

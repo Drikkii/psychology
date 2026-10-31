@@ -490,6 +490,7 @@
   if (fab) {
     const fabToggle = fab.querySelector('.fab__toggle');
     const setFab = (open) => {
+      fab.classList.add('is-animated');
       fab.classList.toggle('is-open', open);
       fabToggle.setAttribute('aria-expanded', String(open));
     };
