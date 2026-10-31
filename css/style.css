@@ -1768,6 +1768,7 @@ p {
 /* Ряд кнопок на служебных страницах (404) */
 .page-actions {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 24px;
