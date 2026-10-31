@@ -35,44 +35,44 @@
   :root:not([data-theme="light"]) {
     color-scheme: dark;
     --bg: #000000;
-    --bg-soft: #121214;
-    --surface: #1c1c1e;
+    --bg-soft: #1c1c1e;
+    --surface: #2c2c2e;
     --text: #f5f5f7;
     --muted: #a1a1a6;
-    --border: #38383a;
+    --border: #48484a;
     --accent: #9fc0e8;
     --accent-hover: #b8d2f1;
     --accent-text: #0b0b0c;
-    --accent-soft: #2c2c2e;
-    --switch-off: #39393d;
+    --accent-soft: #3a3a3c;
+    --switch-off: #545458;
     --switch-on: #9fc0e8;
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-    --slide-1: radial-gradient(120% 140% at 85% 20%, #3a3a3c 0%, #1c1c1e 55%, #000000 100%);
-    --slide-2: radial-gradient(120% 140% at 15% 80%, #3a3a3c 0%, #1c1c1e 60%, #000000 100%);
-    --slide-3: radial-gradient(120% 140% at 80% 80%, #3a3a3c 0%, #1c1c1e 60%, #000000 100%);
-    --slide-4: radial-gradient(120% 140% at 20% 20%, #3a3a3c 0%, #1c1c1e 60%, #000000 100%);
+    --slide-1: radial-gradient(120% 140% at 85% 20%, #48484a 0%, #2c2c2e 55%, #000000 100%);
+    --slide-2: radial-gradient(120% 140% at 15% 80%, #48484a 0%, #2c2c2e 60%, #000000 100%);
+    --slide-3: radial-gradient(120% 140% at 80% 80%, #48484a 0%, #2c2c2e 60%, #000000 100%);
+    --slide-4: radial-gradient(120% 140% at 20% 20%, #48484a 0%, #2c2c2e 60%, #000000 100%);
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
   --bg: #000000;
-  --bg-soft: #121214;
-  --surface: #1c1c1e;
+  --bg-soft: #1c1c1e;
+  --surface: #2c2c2e;
   --text: #f5f5f7;
   --muted: #a1a1a6;
-  --border: #38383a;
+  --border: #48484a;
   --accent: #9fc0e8;
   --accent-hover: #b8d2f1;
   --accent-text: #0b0b0c;
-  --accent-soft: #2c2c2e;
-  --switch-off: #39393d;
+  --accent-soft: #3a3a3c;
+  --switch-off: #545458;
   --switch-on: #9fc0e8;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  --slide-1: radial-gradient(120% 140% at 85% 20%, #3a3a3c 0%, #1c1c1e 55%, #000000 100%);
-  --slide-2: radial-gradient(120% 140% at 15% 80%, #3a3a3c 0%, #1c1c1e 60%, #000000 100%);
-  --slide-3: radial-gradient(120% 140% at 80% 80%, #3a3a3c 0%, #1c1c1e 60%, #000000 100%);
-  --slide-4: radial-gradient(120% 140% at 20% 20%, #3a3a3c 0%, #1c1c1e 60%, #000000 100%);
+  --slide-1: radial-gradient(120% 140% at 85% 20%, #48484a 0%, #2c2c2e 55%, #000000 100%);
+  --slide-2: radial-gradient(120% 140% at 15% 80%, #48484a 0%, #2c2c2e 60%, #000000 100%);
+  --slide-3: radial-gradient(120% 140% at 80% 80%, #48484a 0%, #2c2c2e 60%, #000000 100%);
+  --slide-4: radial-gradient(120% 140% at 20% 20%, #48484a 0%, #2c2c2e 60%, #000000 100%);
 }
 
 /* ==========================================================================
@@ -95,7 +95,7 @@ body {
   margin: 0;
   font-family: var(--font-sans);
   font-size: 17px;
-  line-height: 1.6;
+  line-height: 1.3;
   background: var(--bg);
   color: var(--text);
   overflow-x: hidden;
@@ -606,9 +606,6 @@ p {
     --text: #2b2a28;
     --muted: #514b43;
     --border: rgba(43, 42, 40, 0.25);
-    --accent: #56756a;
-    --accent-hover: #476358;
-    --accent-text: #ffffff;
   }
 
   /* На 20% ниже пропорций фото (941 × 0.8 ≈ 753). Если тексту не хватает
@@ -646,9 +643,16 @@ p {
     flex-direction: column;
   }
 
+  /* Слайды одной высоты: разницу забирает фото, чтобы у коротких не было пустоты */
+  .slide__image {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
   .slide__content {
+    flex: none;
     max-width: none;
-    padding: 16px 20px 76px;
+    padding: 17px 21px 69px;
   }
 
   .slide__eyebrow {
@@ -661,9 +665,10 @@ p {
     margin-bottom: 0;
   }
 
-  .slide__actions {
-    margin-top: 16px;
+  .slide--2 .slide__text {
+    display: none;
   }
+
 }
 
 .slide__eyebrow {
@@ -688,23 +693,41 @@ p {
   margin-top: 28px;
 }
 
-/* Первый слайд: подпись и кнопки всех способов связи */
+/* Первый слайд: подпись над кнопками связи */
 .slide__actions-label {
   margin: 20px 0 0;
   font-weight: 600;
 }
 
-.slide__actions--contacts {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-  max-width: 420px;
+.slide__actions.contact-buttons {
   margin-top: 10px;
 }
 
-.slide__actions--contacts .btn {
+/* Кнопки всех способов связи: первый слайд и блоки призыва к записи */
+.contact-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  width: min(100%, 420px);
+}
+
+.contact-buttons .btn {
   padding-left: 8px;
   padding-right: 8px;
+}
+
+@media (max-width: 900px) {
+  .slide__actions {
+    margin-top: 12px;
+  }
+
+  .slide__actions-label {
+    margin-top: 12px;
+  }
+
+  .slide__actions.contact-buttons {
+    margin-top: 6px;
+  }
 }
 
 .slider__arrow {
@@ -822,7 +845,29 @@ p {
    Секции и карточки
    ========================================================================== */
 .section {
-  padding: clamp(56px, 9vw, 104px) 0;
+  padding: clamp(28px, 4.5vw, 52px) 0;
+}
+
+@media (min-width: 901px) {
+  .section {
+    padding: clamp(20px, 2.25vw, 26px) 0;
+  }
+}
+
+/* Дипломы и сертификаты: снизу вдвое меньше обычного */
+.section--certs {
+  padding-bottom: clamp(14px, 2.25vw, 26px);
+}
+
+@media (min-width: 901px) {
+  .section--certs {
+    padding-bottom: clamp(10px, 1.125vw, 13px);
+  }
+}
+
+/* Блок записи: отступы сверху и снизу дают соседняя секция и футер */
+.section--cta {
+  padding: 0;
 }
 
 .section--soft {
@@ -831,7 +876,7 @@ p {
 
 .section__head {
   max-width: 680px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .section__head p {
@@ -840,7 +885,7 @@ p {
 }
 
 .page-head {
-  padding: clamp(40px, 7vw, 80px) 0 8px;
+  padding: clamp(20px, 3.5vw, 40px) 0 8px;
 }
 
 .page-head p {
@@ -851,7 +896,7 @@ p {
 
 .grid {
   display: grid;
-  gap: 20px;
+  gap: 10px 20px;
 }
 
 .grid--3 {
@@ -938,6 +983,27 @@ p {
   font-size: 1.5rem;
 }
 
+/* Зачёркнутая обычная цена рядом со скидочной */
+.price-old {
+  color: var(--muted);
+}
+
+.service__price .price-old {
+  font-size: 0.75em;
+}
+
+.service__save {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 .service__usd {
   font-family: var(--font-sans);
   font-size: 0.95rem;
@@ -992,7 +1058,7 @@ p {
 .steps {
   counter-reset: step;
   display: grid;
-  gap: 20px;
+  gap: 10px 20px;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   margin: 0;
   padding: 0;
@@ -1100,7 +1166,7 @@ p {
    ========================================================================== */
 .about {
   display: grid;
-  gap: clamp(28px, 5vw, 64px);
+  gap: clamp(14px, 2.5vw, 32px) clamp(28px, 5vw, 64px);
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   align-items: start;
 }
@@ -1125,7 +1191,7 @@ p {
 
 .facts {
   display: grid;
-  gap: 16px;
+  gap: 8px 16px;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   margin: 28px 0 0;
 }
@@ -1260,7 +1326,7 @@ p {
 .cert figcaption {
   margin-top: 12px;
   font-size: 0.95rem;
-  line-height: 1.4;
+  line-height: 1.2;
 }
 
 /* Фото на странице «Обо мне» */
@@ -1393,7 +1459,7 @@ p {
 .carousel__controls {
   display: flex;
   gap: 12px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .carousel__controls .slider__arrow {
@@ -1475,11 +1541,17 @@ p {
    Подвал
    ========================================================================== */
 .site-footer {
-  margin-top: clamp(56px, 9vw, 104px);
+  margin-top: clamp(28px, 4.5vw, 52px);
   padding: 48px 0 32px;
   border-top: 1px solid var(--border);
   background: var(--bg-soft);
   font-size: 0.95rem;
+}
+
+@media (min-width: 901px) {
+  .site-footer {
+    margin-top: clamp(20px, 2.25vw, 26px);
+  }
 }
 
 .footer__grid {
@@ -1531,61 +1603,94 @@ p {
 }
 
 /* ==========================================================================
-   Плавающие кнопки связи (правый нижний угол, на всех страницах)
+   Облачко «Написать» (правый нижний угол, на всех страницах):
+   прижато к краю экрана, по нажатию выезжает меню со способами связи
    ========================================================================== */
 .fab {
+  display: none;
+}
+
+.js .fab {
   position: fixed;
-  right: calc(16px + env(safe-area-inset-right));
-  bottom: calc(16px + env(safe-area-inset-bottom));
+  right: 0;
+  bottom: 0;
   z-index: 55;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: none;
 }
 
-.fab__btn {
-  display: grid;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  background: var(--surface);
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  color: var(--accent);
-  box-shadow: var(--shadow);
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-}
-
-.fab__btn:hover {
+.fab__toggle {
+  position: relative;
+  z-index: 1;
+  padding: 18px calc(22px + env(safe-area-inset-right)) calc(18px + env(safe-area-inset-bottom)) 26px;
+  border: 0;
+  border-radius: 28px 0 0 0;
+  pointer-events: auto;
   background: var(--accent);
-  border-color: var(--accent);
   color: var(--accent-text);
-  transform: scale(1.06);
+  box-shadow: var(--shadow);
+  font: inherit;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-.fab__btn svg {
+.fab__toggle:hover {
+  background: var(--accent-hover);
+}
+
+.fab__menu {
+  display: flex;
+  flex-direction: column;
+  padding: 8px calc(8px + env(safe-area-inset-right)) 8px 8px;
+  border-radius: 20px 0 0 20px;
+  pointer-events: auto;
+  background: var(--accent);
+  box-shadow: var(--shadow);
+  visibility: hidden;
+  transform: translateX(100%);
+  transition: transform 0.25s ease, visibility 0.25s;
+}
+
+.fab.is-open .fab__menu {
+  visibility: visible;
+  transform: none;
+}
+
+.fab__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 8px 20px 8px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--accent-text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.fab__link:hover {
+  background: var(--accent-hover);
+  color: var(--accent-text);
+}
+
+.fab__link svg {
+  flex: none;
   width: 22px;
   height: 22px;
 }
 
-@media (max-width: 600px) {
-  .fab__btn {
-    width: 46px;
-    height: 46px;
-  }
-
-  /* На телефоне плашка cookie занимает всю ширину — прячем кнопки, пока она открыта */
-  .cookie-open .fab {
-    display: none;
-  }
-}
-
-/* Пока на экране кнопки связи из слайда, плавающие их только перекрывают */
+/* На телефоне и планшете облачко перекрывало бы плашку cookie и кнопки всех способов связи */
 @media (max-width: 900px) {
-  .contacts-in-view .fab {
+  .js.cookie-open .fab,
+  .js.contacts-in-view .fab {
     display: none;
   }
 }
@@ -1609,7 +1714,7 @@ p {
   background: var(--surface);
   box-shadow: var(--shadow);
   font-size: 0.9rem;
-  line-height: 1.5;
+  line-height: 1.25;
 }
 
 .cookie-banner[hidden] {

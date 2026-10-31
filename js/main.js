@@ -485,8 +485,45 @@
   const consent = readConsent();
   if (consent && consent.analytics) loadMetrika();
 
-  // Плавающие кнопки прячутся, пока видны кнопки связи в слайде (CSS — только на мобилке)
-  const slideContacts = document.querySelectorAll('.slide__actions--contacts');
+  // Облачко «Написать»: меню закрывается повторным нажатием, вне его, по Esc и после выбора ссылки
+  const fab = document.querySelector('[data-fab]');
+  if (fab) {
+    const fabToggle = fab.querySelector('.fab__toggle');
+    const setFab = (open) => {
+      fab.classList.toggle('is-open', open);
+      fabToggle.setAttribute('aria-expanded', String(open));
+    };
+
+    fabToggle.addEventListener('click', () => setFab(!fab.classList.contains('is-open')));
+    fab.querySelector('.fab__menu').addEventListener('click', (event) => {
+      if (event.target.closest('a')) setFab(false);
+    });
+    document.addEventListener('click', (event) => {
+      if (!fab.contains(event.target)) setFab(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && fab.classList.contains('is-open')) {
+        setFab(false);
+        fabToggle.focus();
+      }
+    });
+
+    // У низа страницы облачко останавливается над строкой с политикой
+    const footerLegal = document.querySelector('.footer__legal');
+    if (footerLegal) {
+      const FAB_LEGAL_GAP = 8;
+      const liftFab = () => {
+        const overlap = window.innerHeight - footerLegal.getBoundingClientRect().top + FAB_LEGAL_GAP;
+        fab.style.transform = overlap > 0 ? 'translateY(-' + overlap + 'px)' : '';
+      };
+      liftFab();
+      window.addEventListener('scroll', liftFab, { passive: true });
+      window.addEventListener('resize', liftFab);
+    }
+  }
+
+  // Облачко прячется, пока видны кнопки всех способов связи (CSS — только на мобилке)
+  const slideContacts = document.querySelectorAll('.contact-buttons');
   if (slideContacts.length && 'IntersectionObserver' in window) {
     const visibleContacts = new Set();
     const contactsObserver = new IntersectionObserver((entries) => {
