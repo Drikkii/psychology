@@ -85,6 +85,8 @@
 }
 
 html {
+  /* Быстрые нажатия не приближают страницу; масштаб двумя пальцами работает */
+  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
