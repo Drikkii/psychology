@@ -1359,7 +1359,7 @@ p {
   padding: 24px 80px;
   border: 0;
   background: transparent;
-  color: #ffffff;
+  color: var(--text);
 }
 
 .lightbox[open] {
@@ -1368,8 +1368,18 @@ p {
   justify-content: center;
 }
 
+/* В тёмной теме — цвет основного фона, в светлой — прозрачный серый.
+   В ::backdrop старые браузеры не видят переменные, поэтому цвета заданы явно */
 .lightbox::backdrop {
-  background: rgba(8, 12, 24, 0.88);
+  background: rgba(44, 44, 46, 0.94);
+}
+
+:root[data-theme="light"] .lightbox::backdrop {
+  background: rgba(70, 70, 70, 0.75);
+}
+
+:root[data-theme="light"] .lightbox__caption {
+  color: #ffffff;
 }
 
 /* Начальный фокус окна — на документе, а не на кнопке «×» (иначе Safari сразу рисует кольцо) */
@@ -1408,17 +1418,17 @@ p {
   right: 16px;
   width: 48px;
   height: 48px;
-  border: 0;
+  border: 1px solid var(--border);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
+  background: var(--surface);
+  color: var(--text);
   font-size: 2rem;
   line-height: 1;
   cursor: pointer;
 }
 
 .lightbox__close:hover {
-  background: rgba(255, 255, 255, 0.24);
+  background: var(--accent-soft);
 }
 
 .lightbox__arrow {
