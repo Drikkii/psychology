@@ -447,6 +447,57 @@ p {
   display: none;
 }
 
+/* Копия навигации под слайдером на главной */
+.hero-nav {
+  padding-top: 14px;
+}
+
+@media (max-width: 900px) {
+  .hero-nav {
+    display: none;
+  }
+}
+
+.hero-nav__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 28px;
+}
+
+.hero-nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-nav__list a {
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.hero-nav__list a:hover,
+.hero-nav__list a[aria-current="page"] {
+  border-bottom-color: var(--accent);
+}
+
+.hero-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+html:not(.js) .theme-switch--hero {
+  display: none;
+}
+
 /* Копия переключателя в шапке — только на мобилке, рядом с бургером */
 .theme-switch--bar {
   display: none;
