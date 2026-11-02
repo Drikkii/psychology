@@ -8,6 +8,10 @@
   --bg-soft: #efeae1;
   --surface: #ffffff;
   --text: #2b2a28;
+  --heading: #2b2a28;
+  --heading-weight: 500;
+  --title-fit: 0.08;
+  --label: #6b665e;
   --muted: #6b665e;
   --border: #e3ddd2;
   --accent: #56756a;
@@ -34,45 +38,53 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #2c2c2e;
-    --bg-soft: #323234;
-    --surface: #3a3a3d;
-    --text: #f5f5f7;
-    --muted: #b8b8bc;
-    --border: #58585b;
+    --bg: #222328;
+    --bg-soft: #28292f;
+    --surface: #2d2d35;
+    --text: #e6e7ec;
+    --heading: #ffffff;
+    --heading-weight: 700;
+    --title-fit: 0.071;
+    --label: #ffffff;
+    --muted: #cfd0d8;
+    --border: #464753;
     --accent: #9fc0e8;
     --accent-hover: #b8d2f1;
     --accent-text: #0b0b0c;
-    --accent-soft: #464649;
-    --switch-off: #626266;
+    --accent-soft: #383944;
+    --switch-off: #54555f;
     --switch-on: #9fc0e8;
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-    --slide-1: radial-gradient(120% 140% at 85% 20%, #58585b 0%, #3a3a3d 55%, #2c2c2e 100%);
-    --slide-2: radial-gradient(120% 140% at 15% 80%, #58585b 0%, #3a3a3d 60%, #2c2c2e 100%);
-    --slide-3: radial-gradient(120% 140% at 80% 80%, #58585b 0%, #3a3a3d 60%, #2c2c2e 100%);
-    --slide-4: radial-gradient(120% 140% at 20% 20%, #58585b 0%, #3a3a3d 60%, #2c2c2e 100%);
+    --slide-1: radial-gradient(120% 140% at 85% 20%, #464753 0%, #2d2d35 55%, #222328 100%);
+    --slide-2: radial-gradient(120% 140% at 15% 80%, #464753 0%, #2d2d35 60%, #222328 100%);
+    --slide-3: radial-gradient(120% 140% at 80% 80%, #464753 0%, #2d2d35 60%, #222328 100%);
+    --slide-4: radial-gradient(120% 140% at 20% 20%, #464753 0%, #2d2d35 60%, #222328 100%);
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #2c2c2e;
-  --bg-soft: #323234;
-  --surface: #3a3a3d;
-  --text: #f5f5f7;
-  --muted: #b8b8bc;
-  --border: #58585b;
+  --bg: #222328;
+  --bg-soft: #28292f;
+  --surface: #2d2d35;
+  --text: #e6e7ec;
+  --heading: #ffffff;
+  --heading-weight: 700;
+  --title-fit: 0.071;
+  --label: #ffffff;
+  --muted: #cfd0d8;
+  --border: #464753;
   --accent: #9fc0e8;
   --accent-hover: #b8d2f1;
   --accent-text: #0b0b0c;
-  --accent-soft: #464649;
-  --switch-off: #626266;
+  --accent-soft: #383944;
+  --switch-off: #54555f;
   --switch-on: #9fc0e8;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  --slide-1: radial-gradient(120% 140% at 85% 20%, #58585b 0%, #3a3a3d 55%, #2c2c2e 100%);
-  --slide-2: radial-gradient(120% 140% at 15% 80%, #58585b 0%, #3a3a3d 60%, #2c2c2e 100%);
-  --slide-3: radial-gradient(120% 140% at 80% 80%, #58585b 0%, #3a3a3d 60%, #2c2c2e 100%);
-  --slide-4: radial-gradient(120% 140% at 20% 20%, #58585b 0%, #3a3a3d 60%, #2c2c2e 100%);
+  --slide-1: radial-gradient(120% 140% at 85% 20%, #464753 0%, #2d2d35 55%, #222328 100%);
+  --slide-2: radial-gradient(120% 140% at 15% 80%, #464753 0%, #2d2d35 60%, #222328 100%);
+  --slide-3: radial-gradient(120% 140% at 80% 80%, #464753 0%, #2d2d35 60%, #222328 100%);
+  --slide-4: radial-gradient(120% 140% at 20% 20%, #464753 0%, #2d2d35 60%, #222328 100%);
 }
 
 /* ==========================================================================
@@ -126,16 +138,31 @@ h2,
 h3,
 .h3 {
   overflow-wrap: break-word;
-  hyphens: auto;
   font-family: var(--font-serif);
-  font-weight: 500;
+  font-weight: var(--heading-weight);
   line-height: 1.2;
   margin: 0 0 0.5em;
   letter-spacing: -0.01em;
+  color: var(--heading);
+}
+
+strong,
+.faq summary,
+.facts dd,
+.footer__title,
+.slide__actions-label {
+  color: var(--heading);
 }
 
 h1 {
   font-size: clamp(2rem, 4.5vw, 3.25rem);
+}
+
+/* «Конфиденциальности» в заголовке должно вмещаться целиком */
+@media (max-width: 359px) {
+  h1 {
+    font-size: 1.7rem;
+  }
 }
 
 h2 {
@@ -602,10 +629,22 @@ p {
   font-size: clamp(1.5rem, 2.6vw, 2.5rem);
 }
 
+.slide__line {
+  white-space: nowrap;
+}
+
+/* На узких телефонах заголовок ужимается, чтобы первая строка не переносилась */
+@media (max-width: 420px) {
+  .slide--1 .slide__content h2 {
+    font-size: min(1.5rem, calc((100vw - 74px) * var(--title-fit)));
+  }
+}
+
 @media (min-width: 901px) {
   /* Фото светлое в любой теме — текст на нём всегда тёмный */
   .slide {
     --text: #2b2a28;
+    --heading: #2b2a28;
     --muted: #514b43;
     --border: rgba(43, 42, 40, 0.25);
   }
@@ -886,6 +925,14 @@ p {
   font-size: 1.1rem;
 }
 
+.icon-inline {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  vertical-align: -0.22em;
+  color: var(--accent);
+}
+
 .page-head {
   padding: clamp(20px, 3.5vw, 40px) 0 8px;
 }
@@ -893,6 +940,28 @@ p {
 .page-head p {
   max-width: 680px;
   font-size: 1.15rem;
+  color: var(--muted);
+}
+
+.phones {
+  display: grid;
+  gap: 14px;
+  margin: 16px 0 0;
+  font-size: 1.15rem;
+}
+
+.phones dt {
+  color: var(--muted);
+}
+
+.phones dd {
+  margin: 0;
+}
+
+/* Номер для мессенджеров не ссылка, поэтому серый */
+.phones dd > span,
+.story p > span.nowrap,
+.footer__links li > span {
   color: var(--muted);
 }
 
@@ -979,6 +1048,74 @@ p {
   margin-top: auto;
 }
 
+/* Длинное описание открывается стрелкой; анимация включается с первым нажатием */
+.service__toggle {
+  margin-left: auto;
+}
+
+.service__more {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin: -8px 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.service__more[hidden] {
+  display: none;
+}
+
+.service__more svg {
+  width: 20px;
+  height: 20px;
+}
+
+.service.is-animated .service__more svg {
+  transition: transform 0.35s ease;
+}
+
+.service.is-open .service__more svg {
+  transform: rotate(180deg);
+}
+
+/* 5 строк на телефоне, 4 на компьютере; открытую высоту ставит main.js */
+.js .service__desc {
+  --desc-lines: 5;
+  max-height: calc(1.3em * var(--desc-lines));
+  overflow: hidden;
+  line-height: 1.3;
+}
+
+@media (min-width: 901px) {
+  .js .service__desc {
+    --desc-lines: 4;
+  }
+}
+
+/* Многоточие в конце обрезанного текста; пока идёт анимация, его нет */
+.js .service__desc.is-clamped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--desc-lines);
+}
+
+.service.is-animated .service__desc {
+  transition: max-height 0.35s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service.is-animated .service__desc,
+  .service.is-animated .service__more svg {
+    transition: none;
+  }
+}
+
 .service__price {
   margin-bottom: 0;
   font-family: var(--font-serif);
@@ -1024,7 +1161,7 @@ p {
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--label);
 }
 
 .package__price {
@@ -1371,7 +1508,7 @@ p {
 /* В тёмной теме — цвет основного фона, в светлой — прозрачный серый.
    В ::backdrop старые браузеры не видят переменные, поэтому цвета заданы явно */
 .lightbox::backdrop {
-  background: rgba(44, 44, 46, 0.94);
+  background: rgba(34, 35, 40, 0.94);
 }
 
 :root[data-theme="light"] .lightbox::backdrop {
@@ -1502,12 +1639,75 @@ p {
   align-self: flex-start;
 }
 
-.note {
-  padding: 20px 24px;
-  border-left: 3px solid var(--accent);
-  background: var(--surface);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  color: var(--muted);
+/* На телефоне карточки становятся кнопками 2×2, нажимается вся кнопка */
+@media (max-width: 700px) {
+  .contact-grid {
+    grid-template-columns: repeat(2, 131px);
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .contact-card {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 15px 5px;
+    border-color: transparent;
+    background: var(--accent);
+    color: var(--accent-text);
+    text-align: center;
+    transition: transform 0.15s ease;
+  }
+
+  .contact-card:active {
+    transform: scale(0.97);
+  }
+
+  .contact-card .card__icon {
+    width: 73px;
+    height: 73px;
+    margin: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    color: inherit;
+  }
+
+  .contact-card .card__icon svg {
+    width: 39px;
+    height: 39px;
+  }
+
+  .contact-card .h3 {
+    margin: 0;
+    color: inherit;
+    font-size: 1.15rem;
+  }
+
+  .contact-card p {
+    display: none;
+  }
+
+  .contact-card .btn {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: inherit;
+    background: none;
+    color: transparent;
+    font-size: 0;
+    transform: none;
+  }
+
+  .contact-card .btn:focus-visible {
+    outline: 3px solid var(--accent-text);
+    outline-offset: -6px;
+  }
 }
 
 /* ==========================================================================
@@ -1528,6 +1728,23 @@ p {
 
 .prose li {
   margin-bottom: 0.4em;
+}
+
+.story h2:first-child {
+  margin-top: 0;
+}
+
+.story .contact-buttons {
+  margin-top: 16px;
+}
+
+.story__phone {
+  font-weight: 600;
+}
+
+.about__lead {
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  font-weight: 700;
 }
 
 .table-wrap {

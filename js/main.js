@@ -47,7 +47,7 @@
   const themeSwitches = document.querySelectorAll('.theme-switch');
   const themeColorMeta = document.querySelectorAll('meta[name="theme-color"]');
   const favicons = document.querySelectorAll('link[rel="icon"]');
-  const THEME_COLORS = { light: '#f7f4ef', dark: '#2c2c2e' };
+  const THEME_COLORS = { light: '#f7f4ef', dark: '#222328' };
 
   function systemTheme() {
     return darkQuery.matches ? 'dark' : 'light';
@@ -531,6 +531,42 @@
       window.addEventListener('resize', liftFab);
       if (cookieBanner && 'ResizeObserver' in window) new ResizeObserver(liftFab).observe(cookieBanner);
     }
+  }
+
+  // Услуги: стрелка и многоточие появляются у описаний, которые не вмещаются в отведённые строки
+  const serviceCards = document.querySelectorAll('.service');
+  if (serviceCards.length) {
+    const syncServiceCards = () => {
+      serviceCards.forEach((card) => {
+        const text = card.querySelector('.service__desc');
+        const open = card.classList.contains('is-open');
+        text.classList.remove('is-clamped');
+        text.style.maxHeight = open ? text.scrollHeight + 'px' : '';
+        const long = text.scrollHeight > text.clientHeight + 1;
+        text.classList.toggle('is-clamped', !open && long);
+        card.querySelector('.service__more').hidden = !open && !long;
+      });
+    };
+    serviceCards.forEach((card) => {
+      const text = card.querySelector('.service__desc');
+      const button = card.querySelector('.service__more');
+      button.addEventListener('click', () => {
+        card.classList.add('is-animated');
+        const open = card.classList.toggle('is-open');
+        text.classList.remove('is-clamped');
+        text.style.maxHeight = open ? text.scrollHeight + 'px' : '';
+        button.setAttribute('aria-expanded', String(open));
+        button.setAttribute('aria-label', open ? 'Свернуть описание' : 'Показать описание полностью');
+        if (!open) {
+          setTimeout(() => {
+            if (!card.classList.contains('is-open')) text.classList.add('is-clamped');
+          }, 380);
+        }
+      });
+    });
+    window.addEventListener('resize', syncServiceCards);
+    window.addEventListener('load', syncServiceCards);
+    syncServiceCards();
   }
 
   // Цели Метрики: клики по кнопкам связи (data-goal="telegram" и т. п.)
