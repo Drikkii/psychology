@@ -569,6 +569,57 @@
     syncServiceCards();
   }
 
+  // Отзывы: больше 7 строк — остальное скрыто, открывается стрелкой (как в «Услугах»).
+  // Копии карточек в ленте тоже считаются; кнопку нажимают через общий обработчик
+  const reviewCards = Array.from(document.querySelectorAll('.review'));
+  if (reviewCards.length) {
+    const syncReviews = () => {
+      reviewCards.forEach((card) => {
+        const text = card.querySelector('.review__text');
+        const button = card.querySelector('.review__more');
+        if (!text || !button) return;
+        const open = card.classList.contains('is-open');
+        text.style.maxHeight = '';
+        text.classList.remove('is-clamped');
+        const full = text.scrollHeight;
+        text.classList.add('is-clamped');
+        const closed = text.clientHeight;
+        const long = full > closed + 1;
+        button.hidden = !long;
+        text.dataset.closed = String(closed);
+        if (!long) {
+          text.classList.remove('is-clamped');
+        } else if (open) {
+          text.classList.remove('is-clamped');
+          text.style.maxHeight = full + 'px';
+        } else {
+          text.style.maxHeight = closed + 'px';
+        }
+      });
+    };
+    document.addEventListener('click', (event) => {
+      const button = event.target.closest('.review__more');
+      if (!button) return;
+      const card = button.closest('.review');
+      const text = card.querySelector('.review__text');
+      card.classList.add('is-animated');
+      const open = card.classList.toggle('is-open');
+      text.classList.remove('is-clamped');
+      text.style.maxHeight = (open ? text.scrollHeight : Number(text.dataset.closed)) + 'px';
+      button.setAttribute('aria-expanded', String(open));
+      button.setAttribute('aria-label', open ? 'Свернуть отзыв' : 'Показать отзыв полностью');
+      if (!open) {
+        setTimeout(() => {
+          if (!card.classList.contains('is-open')) text.classList.add('is-clamped');
+        }, 380);
+      }
+    });
+    window.addEventListener('resize', syncReviews);
+    window.addEventListener('load', syncReviews);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncReviews);
+    syncReviews();
+  }
+
   // Цели Метрики: клики по кнопкам связи (data-goal="telegram" и т. п.)
   document.addEventListener('click', (event) => {
     const link = event.target.closest('[data-goal]');
@@ -602,4 +653,116 @@
   document.querySelectorAll('[data-year]').forEach((el) => {
     el.textContent = String(new Date().getFullYear());
   });
+
+  /* ------------------------------------------------------------------------
+     «Написать отзыв»: окно с формой. Отзыв уходит на api/reviews этого же
+     сайта и появляется на сайте только после одобрения психологом.
+     ------------------------------------------------------------------------ */
+  const reviewDialog = document.querySelector('[data-review-dialog]');
+  if (reviewDialog && typeof reviewDialog.showModal === 'function') {
+    const form = reviewDialog.querySelector('[data-review-form]');
+    const thanks = document.querySelector('[data-review-thanks]');
+    const errorBox = reviewDialog.querySelector('[data-review-error]');
+    const submit = reviewDialog.querySelector('[data-review-submit]');
+    const stars = Array.from(reviewDialog.querySelectorAll('.stars__star'));
+    const dateInput = reviewDialog.querySelector('[data-review-date]');
+    const pad = (n) => String(n).padStart(2, '0');
+
+    // Звёзды: подсвечиваются выбранная и все до неё (и при наведении мышью)
+    function paintStars(n) {
+      stars.forEach((star, i) => star.classList.toggle('is-on', i < n));
+    }
+    const chosen = () => Number((form.querySelector('input[name="rating"]:checked') || {}).value || 0);
+    stars.forEach((star, i) => {
+      star.addEventListener('mouseenter', () => paintStars(i + 1));
+      star.addEventListener('mouseleave', () => paintStars(chosen()));
+    });
+    form.addEventListener('change', (event) => {
+      if (event.target.name === 'rating') paintStars(chosen());
+    });
+
+    function showError(text, field) {
+      errorBox.textContent = text;
+      form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+      const input = field && form.querySelector(`[name="${field}"]`);
+      if (input) {
+        input.setAttribute('aria-invalid', 'true');
+        input.focus();
+      }
+    }
+
+    function open() {
+      const now = new Date();
+      dateInput.max = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+      showError('');
+      reviewDialog.showModal();
+    }
+
+    document.querySelectorAll('[data-review-open]').forEach((btn) => btn.addEventListener('click', open));
+    reviewDialog.querySelectorAll('[data-review-close]').forEach((btn) => btn.addEventListener('click', () => reviewDialog.close()));
+    reviewDialog.addEventListener('click', (event) => {
+      if (event.target === reviewDialog) reviewDialog.close();
+    });
+
+    // «Спасибо за отзыв»: отдельное окошко на 2 секунды; закрывается само, крестиком, Esc или щелчком мимо
+    const THANKS_MS = 2000;
+    let thanksTimer = 0;
+    if (thanks) {
+      thanks.addEventListener('close', () => clearTimeout(thanksTimer));
+      thanks.querySelectorAll('[data-review-thanks-close]').forEach((btn) => btn.addEventListener('click', () => thanks.close()));
+      thanks.addEventListener('click', (event) => {
+        if (event.target === thanks) thanks.close();
+      });
+    }
+    function showThanks() {
+      if (!thanks) return;
+      thanks.showModal();
+      clearTimeout(thanksTimer);
+      thanksTimer = setTimeout(() => thanks.close(), THANKS_MS);
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const data = {
+        rating: chosen(),
+        name: form.elements.name.value.trim(),
+        date: form.elements.date.value,
+        text: form.elements.text.value.trim(),
+        consent: form.elements.consent.checked,
+        website: form.elements.website.value
+      };
+      if (!data.rating) return showError('Поставьте оценку — от 1 до 5 звёзд.', 'rating');
+      if (!data.name) return showError('Напишите имя — можно только имя или псевдоним.', 'name');
+      if (data.text.length < 20) return showError('Напишите отзыв — хотя бы пару предложений.', 'text');
+      if (!data.consent) return showError('Отметьте согласие на публикацию отзыва.', 'consent');
+      showError('');
+      submit.disabled = true;
+      submit.textContent = 'Отправляю…';
+      try {
+        const res = await fetch('api/reviews', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const answer = await res.json().catch(() => ({}));
+        if (res.ok) {
+          form.reset();
+          paintStars(0);
+          reviewDialog.close();
+          showThanks();
+        } else if (res.status === 422 && answer.message) {
+          showError(answer.message, answer.field);
+        } else if (res.status === 429) {
+          showError('Слишком много отзывов подряд. Попробуйте позже.');
+        } else {
+          showError('Не получилось отправить отзыв. Попробуйте позже или напишите в мессенджер.');
+        }
+      } catch (e) {
+        showError('Не получилось отправить отзыв: нет связи. Попробуйте позже.');
+      } finally {
+        submit.disabled = false;
+        submit.textContent = 'Отправить';
+      }
+    });
+  }
 })();

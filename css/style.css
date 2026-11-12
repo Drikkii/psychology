@@ -1522,8 +1522,67 @@ html:not(.js) .theme-switch--hero {
 }
 
 .review__author {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin-top: auto;
   font-size: 0.95rem;
+}
+
+/* Отзыв длиннее 7 строк: остальное скрыто, открывается стрелкой (как в «Услугах») */
+.review__more {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin: -8px 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.review__more[hidden] {
+  display: none;
+}
+
+.review__more svg {
+  width: 20px;
+  height: 20px;
+}
+
+.review.is-animated .review__more svg {
+  transition: transform 0.35s ease;
+}
+
+.review.is-open .review__more svg {
+  transform: rotate(180deg);
+}
+
+.js .review__text {
+  overflow: hidden;
+}
+
+/* Многоточие в конце обрезанного отзыва; высоту ставит main.js */
+.js .review__text.is-clamped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 7;
+}
+
+.review.is-animated .review__text {
+  transition: max-height 0.35s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .review.is-animated .review__text,
+  .review.is-animated .review__more svg {
+    transition: none;
+  }
 }
 
 .reviews__more {
@@ -2123,4 +2182,254 @@ html:not(.js) .theme-switch--hero {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 24px;
+}
+
+/* ==========================================================================
+   Отзывы: отзывы с сайта над лентой BrainBild и окно «Написать отзыв»
+   ========================================================================== */
+.reviews__head {
+  margin-bottom: 8px;
+}
+
+.reviews__write {
+  margin-top: 4px;
+}
+
+.reviews-site {
+  margin-top: 24px;
+}
+
+.reviews-grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  gap: 20px;
+}
+
+.reviews-grid > li {
+  display: flex;
+}
+
+.reviews-grid > li > * {
+  flex: 1;
+}
+
+.reviews-bb {
+  margin-top: 40px;
+}
+
+.reviews-site h3,
+.reviews-bb h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.review__text p + p {
+  margin-top: 0.6em;
+}
+
+.review-dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.review-dialog::backdrop {
+  background: rgba(34, 35, 40, 0.6);
+}
+
+.review-form {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+}
+
+.review-form h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.review-form__note {
+  margin: -8px 0 0;
+}
+
+.review-form__stars {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.review-form__stars legend,
+.review-form__field > span:first-child {
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.review-form__req {
+  color: #c0533f;
+}
+
+.stars {
+  display: flex;
+  gap: 4px;
+}
+
+.stars__star {
+  position: relative;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--border);
+  cursor: pointer;
+}
+
+.stars__star input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.stars__star.is-on {
+  color: #d6a64b;
+}
+
+.stars__star:has(input:focus-visible) {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.review-form__field {
+  display: grid;
+  gap: 4px;
+}
+
+.review-form__input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+
+.review-form__input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.review-form__input[aria-invalid="true"] {
+  border-color: #c0533f;
+}
+
+textarea.review-form__input {
+  resize: vertical;
+}
+
+.review-form__consent {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 0.95rem;
+}
+
+.review-form__consent input {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  accent-color: var(--accent);
+}
+
+/* Ловушка для ботов: людям не видна */
+.review-form__trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.review-form__error {
+  margin: 0;
+  color: #c0533f;
+  font-weight: 600;
+}
+
+.review-form__error:empty {
+  display: none;
+}
+
+.review-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Крестик в окне отзыва */
+.review-dialog {
+  position: relative;
+}
+
+.review-dialog__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0 0 3px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.review-dialog__close:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.review-dialog__close:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* «Спасибо за отзыв»: маленькое окошко, которое само пропадает */
+.review-thanks {
+  width: min(440px, calc(100vw - 32px));
+  padding: 32px 56px 28px 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.review-thanks::backdrop {
+  background: rgba(34, 35, 40, 0.6);
+}
+
+.review-thanks h2 {
+  margin-bottom: 8px;
+}
+
+.review-thanks p {
+  margin: 0;
+}
+
+/* Заголовок не заезжает под крестик */
+.review-form h2 {
+  padding-right: 48px;
 }
