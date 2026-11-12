@@ -651,6 +651,10 @@ html:not(.js) .theme-switch--hero {
    поверх светлой левой части. На узком — фото сверху целиком, текст под ним. */
 .slide {
   flex: 0 0 100%;
+  /* Слайд никогда не шире слайдера, даже если в тексте очень длинное слово:
+     иначе он растягивается и наезжает на соседний. (overflow: hidden здесь нельзя —
+     на ПК он отключает рост слайда под длинный текст, и текст обрезается) */
+  min-width: 0;
   display: grid;
   background: var(--bg-soft);
 }
@@ -673,6 +677,14 @@ html:not(.js) .theme-switch--hero {
   max-width: min(48%, 620px);
   padding: 32px 0 56px clamp(24px, 7vw, 104px);
   color: var(--text);
+  /* Слово без пробелов длиннее строки (ссылка, опечатка) переносится по буквам;
+     обычный текст по-прежнему переносится по словам. Кнопок это не касается —
+     надписи на них не должны рваться посреди слова */
+  overflow-wrap: anywhere;
+}
+
+.slide__actions {
+  overflow-wrap: normal;
 }
 
 .slide__content h1,
@@ -684,9 +696,11 @@ html:not(.js) .theme-switch--hero {
   white-space: nowrap;
 }
 
-/* На узких телефонах заголовок ужимается, чтобы первая строка не переносилась */
+/* На узких телефонах заголовок ужимается, чтобы первая строка не переносилась
+   (слайды с настройкой «первая строка без переноса» в админке) */
 @media (max-width: 420px) {
-  .slide--1 .slide__content h2 {
+  .slide--fit .slide__content h1,
+  .slide--fit .slide__content h2 {
     font-size: min(1.5rem, calc((100vw - 74px) * var(--title-fit)));
   }
 }
@@ -727,6 +741,11 @@ html:not(.js) .theme-switch--hero {
   .slide__content .btn--outline {
     background: rgba(255, 255, 255, 0.55);
   }
+
+  /* Настройка слайда «скрыть текст на ПК» */
+  .slide--hide-text-pc .slide__text {
+    display: none;
+  }
 }
 
 @media (max-width: 900px) {
@@ -757,7 +776,8 @@ html:not(.js) .theme-switch--hero {
     margin-bottom: 0;
   }
 
-  .slide--2 .slide__text {
+  /* Настройка слайда «скрыть текст на телефоне» */
+  .slide--hide-text-phone .slide__text {
     display: none;
   }
 
@@ -791,7 +811,8 @@ html:not(.js) .theme-switch--hero {
   font-weight: 600;
 }
 
-.slide__actions.contact-buttons {
+/* Под подписью кнопки ближе — для любых кнопок, не только мессенджеров */
+.slide__actions-label + .slide__actions {
   margin-top: 10px;
 }
 
@@ -808,6 +829,14 @@ html:not(.js) .theme-switch--hero {
   padding-right: 8px;
 }
 
+/* Кнопка мессенджера рядом с обычными кнопками — того же размера, что плитка
+   в блоке 2 × 2 (половина от min(100%, 420px) за вычетом промежутка 8px) */
+.slide__actions:not(.contact-buttons) .btn[data-goal] {
+  flex: 0 0 calc((min(100%, 420px) - 8px) / 2);
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
 @media (max-width: 900px) {
   .slide__actions {
     margin-top: 12px;
@@ -817,7 +846,7 @@ html:not(.js) .theme-switch--hero {
     margin-top: 12px;
   }
 
-  .slide__actions.contact-buttons {
+  .slide__actions-label + .slide__actions {
     margin-top: 6px;
   }
 }
