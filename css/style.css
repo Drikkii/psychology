@@ -1922,6 +1922,121 @@ html:not(.js) .theme-switch--hero {
 }
 
 /* ==========================================================================
+   Статьи
+   ========================================================================== */
+.article-list {
+  gap: 20px;
+}
+
+/* Вся карточка — ссылка: ссылка заголовка растянута на карточку */
+.article-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.article-card:hover,
+.article-card:focus-within {
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+}
+
+.article-card__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.article-card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.article-card__link:focus-visible {
+  outline: none;
+}
+
+.article-card:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.article-card__meta,
+.article__meta {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 0.6em;
+}
+
+.article-card .muted {
+  overflow-wrap: break-word;
+}
+
+.article-card__more {
+  margin-top: auto;
+  padding-top: 4px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.article-back {
+  margin-bottom: 0.8em;
+}
+
+.article-back a {
+  text-decoration: none;
+}
+
+.article-head h1 {
+  margin-bottom: 0.3em;
+}
+
+.notice-draft {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  color: var(--heading);
+  font-size: 0.95rem;
+}
+
+/* Текст статьи: длинная ссылка или слово не расширяют страницу */
+.article {
+  overflow-wrap: break-word;
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+.article h2 {
+  margin-top: 1.6em;
+}
+
+.article h3 {
+  margin-top: 1.4em;
+}
+
+.article > :first-child {
+  margin-top: 0;
+}
+
+.article ol {
+  padding-left: 1.4em;
+}
+
+.article blockquote {
+  margin: 1.4em 0;
+  padding: 14px 20px;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--bg-soft);
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  color: var(--heading);
+}
+
+/* ==========================================================================
    Подвал
    ========================================================================== */
 .site-footer {
