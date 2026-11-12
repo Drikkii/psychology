@@ -45,6 +45,7 @@
     --heading: #ffffff;
     --heading-weight: 700;
     --title-fit: 0.071;
+    --narrow-card-title: 0.93;
     --label: #ffffff;
     --muted: #cfd0d8;
     --border: #464753;
@@ -71,6 +72,7 @@
   --heading: #ffffff;
   --heading-weight: 700;
   --title-fit: 0.071;
+  --narrow-card-title: 0.93;
   --label: #ffffff;
   --muted: #cfd0d8;
   --border: #464753;
@@ -1091,6 +1093,18 @@ html:not(.js) .theme-switch--hero {
   margin-bottom: 0;
 }
 
+/* Узкий ПК — три карточки в ряд (901–1000 px): в тёмной теме заголовки жирнее, и длинное слово
+   («профориентирование») не помещалось в карточку и рвалось посередине. Там заголовки карточек
+   чуть меньше; в светлой теме --narrow-card-title не задан, и ничего не меняется */
+/* Граница — ровно там, где сетка становится трёхколоночной (у Firefox ширина бывает дробной, 900,5) */
+@media not all and (max-width: 900px) {
+  @media (max-width: 1000px) {
+    .grid--3 .card h3 {
+      font-size: calc(1.3rem * var(--narrow-card-title, 1));
+    }
+  }
+}
+
 .card__icon {
   display: grid;
   place-items: center;
@@ -1211,7 +1225,9 @@ html:not(.js) .theme-switch--hero {
   font-size: 0.75em;
 }
 
-.service__save {
+/* Значок «скидка N%»: в карточке услуги и в любом тексте, где скидка записана как «5000 ₽ {50%}» */
+.service__save,
+.price-save {
   display: inline-block;
   padding: 4px 12px;
   border-radius: 999px;
