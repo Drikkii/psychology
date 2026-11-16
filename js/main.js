@@ -5,6 +5,23 @@
   const config = window.SITE_CONFIG || {};
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+  // Счётчик посещений сайта: один раз при открытии страницы сообщаем серверу «открыли страницу».
+  // Без cookie; сервер запоминает время, IP и адрес страницы на 90 дней (см. Политику).
+  // На копии сайта на GitHub Pages сервера нет — там не отправляем
+  if (!/github\.io$/.test(location.hostname)) {
+    try {
+      fetch('api/hit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ p: location.pathname }),
+        credentials: 'omit',
+        keepalive: true
+      }).catch(function () {});
+    } catch (e) {
+      // старый браузер — просто не считаем
+    }
+  }
+
   function storageGet(key) {
     try {
       return localStorage.getItem(key);
@@ -137,6 +154,13 @@
         // скринридеров и клавиатуры
         clone.setAttribute('aria-hidden', 'true');
         clone.querySelectorAll('[id]').forEach((node) => node.removeAttribute('id'));
+        // На странице должен остаться один <h1> (SEO): в копиях он становится <h2> с теми же стилями слайда
+        clone.querySelectorAll('h1').forEach((h) => {
+          const h2 = document.createElement('h2');
+          Array.from(h.attributes).forEach((a) => h2.setAttribute(a.name, a.value));
+          while (h.firstChild) h2.appendChild(h.firstChild);
+          h.replaceWith(h2);
+        });
         clone.querySelectorAll('a, button').forEach((node) => node.setAttribute('tabindex', '-1'));
         return clone;
       });
@@ -427,12 +451,30 @@
     });
   }
 
+  // Google Analytics 4: тоже только после согласия на cookie. Реклама и персонализация выключены
+  let ga4Loaded = false;
+  function loadGa4() {
+    const id = String(config.ga4Id || '');
+    if (!/^G-[A-Z0-9]{6,14}$/.test(id) || ga4Loaded) return;
+    ga4Loaded = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () {
+      window.dataLayer.push(arguments);
+    };
+    window.gtag('js', new Date());
+    window.gtag('config', id, { anonymize_ip: true, allow_google_signals: false, allow_ad_personalization_signals: false });
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
+    document.head.appendChild(script);
+  }
+
   function clearMetrikaCookies() {
     const host = location.hostname;
     const domains = ['', host, '.' + host, '.' + host.split('.').slice(-2).join('.')];
     document.cookie.split(';').forEach((part) => {
       const name = part.split('=')[0].trim();
-      if (!name.startsWith('_ym')) return;
+      if (!name.startsWith('_ym') && !name.startsWith('_ga')) return;
       domains.forEach((domain) => {
         document.cookie = `${name}=; Max-Age=0; path=/` + (domain ? `; domain=${domain}` : '');
       });
@@ -461,6 +503,7 @@
       saveConsent(true);
       renderConsent();
       loadMetrika();
+      loadGa4();
     });
 
     banner.querySelector('[data-cookie-decline]').addEventListener('click', () => {
@@ -486,7 +529,10 @@
 
   renderConsent();
   const consent = readConsent();
-  if (consent && consent.analytics) loadMetrika();
+  if (consent && consent.analytics) {
+    loadMetrika();
+    loadGa4();
+  }
 
   // Облачко «Написать»: меню закрывается повторным нажатием, вне его, по Esc и после выбора ссылки
   const fab = document.querySelector('[data-fab]');
@@ -627,6 +673,9 @@
     if (link && id && metrikaLoaded && typeof window.ym === 'function') {
       window.ym(id, 'reachGoal', 'contact_' + link.getAttribute('data-goal'));
     }
+    if (link && ga4Loaded && typeof window.gtag === 'function') {
+      window.gtag('event', 'contact_' + link.getAttribute('data-goal'));
+    }
   });
 
   /* ------------------------------------------------------------------------
@@ -704,8 +753,8 @@
       if (event.target === reviewDialog) reviewDialog.close();
     });
 
-    // «Спасибо за отзыв»: отдельное окошко на 2 секунды; закрывается само, крестиком, Esc или щелчком мимо
-    const THANKS_MS = 2000;
+    // «Спасибо за отзыв»: отдельное окошко на 8 секунд (успеть прочитать про проверку); закрывается само, крестиком, Esc или щелчком мимо
+    const THANKS_MS = 8000;
     let thanksTimer = 0;
     if (thanks) {
       thanks.addEventListener('close', () => clearTimeout(thanksTimer));
@@ -717,6 +766,13 @@
     function showThanks() {
       if (!thanks) return;
       thanks.showModal();
+      // Полоска-таймер внизу окна: перезапуск анимации при каждом показе
+      thanks.classList.remove('is-timing');
+      void thanks.offsetWidth;
+      thanks.classList.add('is-timing');
+      // Фокус — на «Хорошо», а не на крестик
+      const ok = thanks.querySelector('.review-thanks__ok');
+      if (ok) ok.focus();
       clearTimeout(thanksTimer);
       thanksTimer = setTimeout(() => thanks.close(), THANKS_MS);
     }

@@ -1942,6 +1942,19 @@ html:not(.js) .theme-switch--hero {
   box-shadow: var(--shadow);
 }
 
+/* Картинка статьи в карточке: во всю ширину карточки, 16:9 */
+.article-card__cover {
+  display: block;
+  width: calc(100% + 56px);
+  max-width: none;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin: -28px -28px 20px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  object-fit: cover;
+  background: var(--bg-soft);
+}
+
 .article-card__link {
   color: inherit;
   text-decoration: none;
@@ -1970,15 +1983,42 @@ html:not(.js) .theme-switch--hero {
   margin-bottom: 0.6em;
 }
 
+.article__sign {
+  margin-top: 1.6em;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
 .article-card .muted {
   overflow-wrap: break-word;
 }
 
-.article-card__more {
+.article-card__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
   margin-top: auto;
   padding-top: 4px;
+}
+
+.article-card__more {
   color: var(--accent);
   font-weight: 600;
+}
+
+.article-card__author {
+  color: var(--muted);
+  font-size: 0.95rem;
+  text-align: right;
+}
+
+.article-card__author a,
+.article__sign a {
+  position: relative;
+  z-index: 1;
+  color: inherit;
+  text-decoration: none;
 }
 
 .article-back {
@@ -2034,6 +2074,36 @@ html:not(.js) .theme-switch--hero {
   font-family: var(--font-serif);
   font-size: 1.12rem;
   color: var(--heading);
+}
+
+/* Картинка в статье: по ширине текста, с подписью */
+.article__fig {
+  margin: 1.6em 0;
+}
+
+.article__fig img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  background: var(--bg-soft);
+}
+
+/* Свой размер картинки из админки (ширина и высота в px): не шире колонки текста, по центру;
+   если пропорции другие — картинка обрезается по краям, а не сплющивается */
+.article__fig--px img {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  object-fit: cover;
+}
+
+.article__fig figcaption {
+  margin-top: 8px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--muted, var(--text));
+  text-align: center;
 }
 
 /* ==========================================================================
@@ -2521,27 +2591,112 @@ textarea.review-form__input {
   outline-offset: 2px;
 }
 
-/* «Спасибо за отзыв»: маленькое окошко, которое само пропадает */
+/* «Спасибо за отзыв»: карточка по центру — галочка, заголовок, текст, кнопка;
+   внизу полоска-таймер: окно закрывается само через 8 секунд */
 .review-thanks {
-  width: min(440px, calc(100vw - 32px));
-  padding: 32px 56px 28px 28px;
+  position: fixed;
+  width: min(400px, calc(100vw - 32px));
+  margin: auto;
+  padding: 36px 28px 30px;
+  overflow: hidden;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
   color: var(--text);
   box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.review-thanks[open] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: review-thanks-in 0.25s ease-out;
 }
 
 .review-thanks::backdrop {
-  background: rgba(34, 35, 40, 0.6);
+  background: rgba(34, 35, 40, 0.65);
+  backdrop-filter: blur(3px);
 }
 
-.review-thanks h2 {
-  margin-bottom: 8px;
+/* Крестик — лёгкий, без рамки, в углу; текст не сдвигает */
+.review-thanks__close {
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.4rem;
 }
 
-.review-thanks p {
+.review-thanks__close:hover {
+  border-color: transparent;
+  background: var(--bg-soft);
+  color: var(--text);
+}
+
+.review-thanks__icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-text, #fff);
+}
+
+.review-thanks__icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.review-thanks__title {
+  margin: 0 0 8px;
+  padding: 0;
+}
+
+.review-thanks__text {
+  max-width: 30ch;
   margin: 0;
+  color: var(--muted);
+}
+
+.review-thanks__ok {
+  min-width: 160px;
+  margin-top: 24px;
+}
+
+.review-thanks__timer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--accent);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+.review-thanks.is-timing .review-thanks__timer {
+  animation: review-thanks-timer var(--thanks-ms, 8s) linear forwards;
+}
+
+@keyframes review-thanks-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes review-thanks-timer {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .review-thanks[open] { animation: none; }
+  .review-thanks.is-timing .review-thanks__timer { animation: none; transform: scaleX(0); }
 }
 
 /* Заголовок не заезжает под крестик */
