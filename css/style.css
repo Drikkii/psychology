@@ -1263,8 +1263,16 @@ html:not(.js) .theme-switch--hero {
 .package__price {
   margin: 4px 0 8px;
   font-family: var(--font-serif);
-  font-size: 2.75rem;
+  font-size: 1.87rem;
   line-height: 1.1;
+}
+
+/* Доллары у цены пакета — свой размер (≈ 0.63 от прежних 2.75rem рублей), не зависит от размера рублёвой цифры */
+.package__usd {
+  font-family: var(--font-sans);
+  font-size: 1.73rem;
+  color: var(--muted);
+  white-space: nowrap;
 }
 
 .package__per {
@@ -1273,6 +1281,15 @@ html:not(.js) .theme-switch--hero {
 
 .package__per s {
   opacity: 0.8;
+}
+
+/* «вместо …» и сразу под ней значок «скидка N%» */
+.package__old {
+  margin-bottom: 6px;
+}
+
+.package__badge {
+  margin-bottom: 6px;
 }
 
 .package__save {
@@ -1284,6 +1301,14 @@ html:not(.js) .theme-switch--hero {
   color: var(--accent);
   font-size: 0.9rem;
   font-weight: 600;
+  /* «экономия — 15 000 ₽ (≈ $180)» — в одну строку; на очень узких экранах можно переносить */
+  white-space: nowrap;
+}
+
+@media (max-width: 359px) {
+  .package__save {
+    white-space: normal;
+  }
 }
 
 .package--deal {
