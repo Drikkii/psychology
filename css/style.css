@@ -1967,7 +1967,7 @@ html:not(.js) .theme-switch--hero {
   box-shadow: var(--shadow);
 }
 
-/* Картинка статьи в карточке: во всю ширину карточки, 16:9 */
+/* Картинка статьи в карточке: во всю ширину карточки, рамка 16:9, картинка вписывается целиком (не обрезается) */
 .article-card__cover {
   display: block;
   width: calc(100% + 56px);
@@ -1976,7 +1976,7 @@ html:not(.js) .theme-switch--hero {
   aspect-ratio: 16 / 9;
   margin: -28px -28px 20px;
   border-radius: var(--radius) var(--radius) 0 0;
-  object-fit: cover;
+  object-fit: contain;
   background: var(--bg-soft);
 }
 
@@ -2115,12 +2115,12 @@ html:not(.js) .theme-switch--hero {
 }
 
 /* Свой размер картинки из админки (ширина и высота в px): не шире колонки текста, по центру;
-   если пропорции другие — картинка обрезается по краям, а не сплющивается */
+   если пропорции другие — картинка вписывается целиком (не обрезается и не сплющивается) */
 .article__fig--px img {
   max-width: 100%;
   height: auto;
   margin: 0 auto;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .article__fig figcaption {
@@ -2727,4 +2727,27 @@ textarea.review-form__input {
 /* Заголовок не заезжает под крестик */
 .review-form h2 {
   padding-right: 48px;
+}
+
+/* Нижняя строка подвала: © и ссылки слева, «Сделано Drikki» — в правом углу (на узком экране — строкой ниже, справа) */
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  column-gap: 16px;
+}
+
+.footer__credit {
+  margin-left: auto;
+}
+
+.footer__credit a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer__credit a:hover,
+.footer__credit a:focus-visible {
+  text-decoration: underline;
 }
